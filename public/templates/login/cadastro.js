@@ -24,20 +24,38 @@ document.addEventListener('DOMContentLoaded', () => {
         const senha = passwordInput.value.trim();
 
         if (!nome) {
-            alert('Nome e obrigatorio');
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro',
+                text: 'Nome é obrigatório',
+                confirmButtonColor: '#d95a1a'
+            });
             return;
         }
 
         const cadastro = registrarUsuario(email, senha);
-        alert(cadastro.mensagem);
 
         if (!cadastro.sucesso) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro',
+                text: cadastro.mensagem,
+                confirmButtonColor: '#d95a1a'
+            });
             return;
         }
 
         const login = fazerLogin(email, senha);
+
         if (login.sucesso) {
-            window.location.href = '/home';
+            Swal.fire({
+                icon: 'success',
+                title: 'Sucesso!',
+                text: cadastro.mensagem,
+                confirmButtonColor: '#d95a1a'
+            }).then(() => {
+                window.location.href = '/home';
+            });
         }
     });
 });
