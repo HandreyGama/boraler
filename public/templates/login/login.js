@@ -17,10 +17,22 @@ document.addEventListener('DOMContentLoaded', () => {
         const senha = passwordInput.value.trim();
 
         const resultado = fazerLogin(email, senha);
-        alert(resultado.mensagem);
-
-        if (resultado.sucesso) {
-            window.location.href = '/home';
-        }
+       if (resultado.sucesso) {
+    Swal.fire({
+        icon: 'success',
+        title: 'Sucesso!',
+        text: resultado.mensagem,
+        confirmButtonColor: '#d95a1a'
+    }).then(() => {
+        window.location.href = '/home';
+    });
+} else {
+    Swal.fire({
+        icon: 'error',
+        title: 'Erro',
+        text: resultado.mensagem,
+        confirmButtonColor: '#d95a1a'
+    });
+}
     });
 });

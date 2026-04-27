@@ -10,14 +10,14 @@ export function registrarUsuario(email, senha) {
     const senhaNormalizada = String(senha || '').trim();
 
     if (!emailNormalizado || !senhaNormalizada) {
-        return { sucesso: false, mensagem: 'Email e senha sao obrigatorios.' };
+        return { sucesso: false, mensagem: 'O e-mail e a senha são obrigatórios.' };
     }
 
     const usuarios = JSON.parse(localStorage.getItem(USERS_STORAGE_KEY)) || [];
     const jaExiste = usuarios.some((usuario) => usuario.email === emailNormalizado);
 
     if (jaExiste) {
-        return { sucesso: false, mensagem: 'Este email ja esta cadastrado.' };
+        return { sucesso: false, mensagem: 'Este e-mail já está cadastrado.' };
     }
 
     usuarios.push({
@@ -35,7 +35,7 @@ export function fazerLogin(email, senha) {
     const senhaNormalizada = String(senha || '').trim();
 
     if (!emailNormalizado || !senhaNormalizada) {
-        return { sucesso: false, mensagem: 'Email e senha sao obrigatorios.' };
+        return { sucesso: false, mensagem: 'O e-mail e a senha são obrigatórios.' };
     }
 
     const usuarios = JSON.parse(localStorage.getItem(USERS_STORAGE_KEY)) || [];
