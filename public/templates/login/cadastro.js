@@ -42,18 +42,8 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             return;
         }
-
-        const login = await fazerLogin(email, senha);
-
-        if (login.sucesso) {
-            Swal.fire({
-                icon: 'success',
-                title: 'Sucesso!',
-                text: cadastro.mensagem,
-                confirmButtonColor: '#d95a1a'
-            }).then(() => {
-                window.location.href = '/home';
-            });
+        if (cadastro.sucesso) {
+            localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(cadastro.usuario));
         }
     });
 });
