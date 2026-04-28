@@ -33,7 +33,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const cadastro = await registrarUsuario(email, senha);
-
+        localStorage.setItem('libdb_users', JSON.stringify([email, senha]));
+        // salva usuário
+        usuarios.push({
+            email,
+            senha, // (simples por enquanto)
+            role: 'user'
+        });
         if (!cadastro.sucesso) {
             Swal.fire({
                 icon: 'error',

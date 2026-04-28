@@ -1,6 +1,7 @@
 import { fazerLogin, estaLogado, isAdmin } from '../../src/modules/auth.js';
 
 document.addEventListener('DOMContentLoaded', () => {
+    const usuarios = JSON.parse(localStorage.getItem(USERS_KEY)) || [];
     if (estaLogado()) {
         window.location.href = isAdmin() ? '/admin/home' : '/home';
         return;
@@ -28,6 +29,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.location.href = '/home';
             });
         } else {
+            const usuario = usuarios.find(u => u.email === email && u.senha === senha);
+            if (usuario) {
+                localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(usuario));
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Sucesso!',
+                    text: 'Login realizado com sucesso!',
+                }).then(() => {
+                    window.location.href = '/home';
+                });
+
+            }
             Swal.fire({
                 icon: 'error',
                 title: 'Erro',
