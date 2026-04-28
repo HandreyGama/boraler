@@ -69,6 +69,7 @@ function captureDom() {
     dom.btnFullscreen = document.getElementById('btn-fullscreen')
     dom.pageIndicator = document.getElementById('page-indicator')
     dom.readerStage = document.getElementById('reader-stage')
+    dom.ratingContainer = document.getElementById("rating-container");
 }
 
 async function recuperarLivroAusente(bookId) {
@@ -291,6 +292,7 @@ function renderAll(state) {
     }
 
     renderBookMeta(book)
+    renderRating(book)
     renderControls(book)
     renderHighlights(book)
     renderReader(book)
@@ -727,4 +729,39 @@ function resumirTexto(texto, limite) {
     if (texto.length <= limite) return texto
     const corte = texto.lastIndexOf(' ', limite)
     return texto.slice(0, corte > limite - 20 ? corte : limite).trim() + '...'
+}
+
+function renderRating(book) {
+  if (!dom.ratingContainer || !book?.id) return;
+
+  const rating = Number(book.rating ?? 0);
+  const groupName = `rate-${book.id}`;
+
+  dom.ratingContainer.innerHTML = `
+    <input type="radio" name="${groupName}" value="5" id="s5-${book.id}" ${rating === 5 ? "checked" : ""}>
+    <label for="s5-${book.id}" aria-label="5 estrelas">★</label>
+
+    <input type="radio" name="${groupName}" value="4" id="s4-${book.id}" ${rating === 4 ? "checked" : ""}>
+    <label for="s4-${book.id}" aria-label="4 estrelas">★</label>
+
+    <input type="radio" name="${groupName}" value="3" id="s3-${book.id}" ${rating === 3 ? "checked" : ""}>
+    <label for="s3-${book.id}" aria-label="3 estrelas">★</label>
+
+    <input type="radio" name="${groupName}" value="2" id="s2-${book.id}" ${rating === 2 ? "checked" : ""}>
+    <label for="s2-${book.id}" aria-label="2 estrelas">★</label>
+
+    <input type="radio" name="${groupName}" value="1" id="s1-${book.id}" ${rating === 1 ? "checked" : ""}>
+    <label for="s1-${book.id}" aria-label="1 estrela">★</label>
+  `;
+
+  const inputs = dom.ratingContainer.querySelectorAll(`input[name="${groupName}"]`);
+
+  inputs.forEach((input) => {
+    input.addEventListener("change", () => {
+      patchCurrentBook((current) => ({
+        ...current,
+        rating: Number(input.value)
+      }));
+    });
+  });
 }
