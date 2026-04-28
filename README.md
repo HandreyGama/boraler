@@ -5,7 +5,7 @@ Aplicacao web de biblioteca virtual com autenticacao local, busca de livros via 
 
 <img width="1915" height="1017" alt="prints_boraler" src="https://github.com/user-attachments/assets/0a6876d2-6bd3-40e2-8f34-add03419605d" />
 <img width="1916" height="1018" alt="Captura de tela 2026-04-28 120339" src="https://github.com/user-attachments/assets/7ee6306f-5ebd-442c-9778-0ab0f5545f12" />
-<img width="1916" height="1018" alt="Captura de tela 2026-04-28 120339" src="https://github.com/user-attachments/assets/5727fe93-66c2-4c6e-9d81-db438a92eba5" />
+<img width="1911" height="1012" alt="Captura de tela 2026-04-28 120404" src="https://github.com/user-attachments/assets/92be5135-e1df-491d-929a-d5d7fdf49027" />
 
 
 ## Visao Geral
