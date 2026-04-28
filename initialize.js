@@ -3,8 +3,11 @@
 
 import fs from 'fs';
 import path from 'path';
+import { fileURLToPath } from 'url';
 
-const DB_DIR = './db';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const DB_DIR = path.join(__dirname, 'db');
 const USERS_FILE = path.join(DB_DIR, 'users.json');
 
 // Criar diretório se não existir
