@@ -1,5 +1,6 @@
 import { registrarUsuario, fazerLogin, estaLogado, isAdmin } from '../../src/modules/auth.js';
-
+const USERS_KEY = 'libdb_users';
+const CURRENT_USER_KEY = 'libdb_current_user';
 document.addEventListener('DOMContentLoaded', () => {
     const CURRENT_USER_KEY = 'libdb_current_user';
     if (estaLogado()) {

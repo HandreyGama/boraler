@@ -1,4 +1,6 @@
 import { fazerLogin, estaLogado, isAdmin } from '../../src/modules/auth.js';
+const USERS_KEY = 'libdb_users';
+const CURRENT_USER_KEY = 'libdb_current_user';
 
 document.addEventListener('DOMContentLoaded', () => {
     const usuarios = JSON.parse(localStorage.getItem(USERS_KEY)) || [];
@@ -40,6 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 }).then(() => {
                     window.location.href = '/home';
                 });
+                return 
 
             }
             Swal.fire({
