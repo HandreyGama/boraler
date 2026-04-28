@@ -9,6 +9,19 @@
     <script type="module" src="/templates/book/book.js?v=20260420c"></script>
 </head>
 <body data-theme="sepia">
+    <script type="module">
+        import { estaLogado, isAdmin } from '/src/modules/auth.js';
+        
+        // Redirecionar admin
+        if (isAdmin()) {
+            window.location.href = '/admin/home';
+        }
+        
+        // Redirecionar não logados
+        if (!estaLogado()) {
+            window.location.href = '/';
+        }
+    </script>
     <div class="reader-shell">
         <header class="topbar">
             <div class="topbar-left">

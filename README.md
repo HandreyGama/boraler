@@ -149,6 +149,52 @@ http://localhost:5000
 - Uso de fallback local para reduzir dependencia total da API externa.
 - Leitor com funcionalidades relevantes para produto real: progresso, destaque, anotacoes e favoritos.
 - Interface orientada a jornada do usuario, com fluxo claro entre login, descoberta e leitura.
+- Sistema de Admin e User com controle de acesso e CRUD completo (v2).
+
+## Sistema de Admin e User (v2)
+
+O projeto agora suporta dois tipos de usuarios:
+
+### Usuários (Role: `user`)
+- Acessam a interface padrão de leitura (`/home` e `/book`).
+- Gerenciam sua biblioteca pessoal.
+- Exploram o catálogo com filtros e busca.
+
+### Admins (Role: `admin`)
+- Acessam `/admin/home` com lista de todos os usuários em cards.
+- Podem promover/rebaixar usuários e deletar contas.
+- Acessam `/admin/user-library` para gerenciar a biblioteca de qualquer usuário.
+- Acessam `/admin/books-management` para CRUD completo de livros globais.
+
+### Credenciais Padrão (Inicialização)
+
+Na primeira execução, o sistema cria um admin padrão:
+
+```
+Email: admin@boraler.com
+Senha: admin123
+```
+
+### Persistência do Sistema Admin
+
+Dados armazenados em `localStorage`:
+
+- `libdb_users`: usuários com campo `role: 'user' | 'admin'`
+- `libdb_current_user`: usuário logado (objeto com email e role)
+- `libdb_global_books`: livros globais gerenciáveis por admin
+- `libdb_reader_state_${email}`: biblioteca pessoal de cada usuário
+
+### Módulos Novos
+
+- [public/src/modules/admin.js](./public/src/modules/admin.js): Gerenciar usuários
+- [public/src/modules/global_books.js](./public/src/modules/global_books.js): CRUD de livros globais
+- [public/src/modules/init.js](./public/src/modules/init.js): Inicialização do sistema
+
+### Rotas Admin
+
+- `GET /admin/home` - Dashboard com lista de usuários
+- `GET /admin/user-library` - Gerenciar biblioteca de um usuário
+- `GET /admin/books-management` - CRUD de livros globais
 
 ### Limitacoes observadas
 

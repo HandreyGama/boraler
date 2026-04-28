@@ -9,6 +9,19 @@
     <title>Home - BoraLer</title>
 </head>
 <body>
+    <script type="module">
+        import { estaLogado, isAdmin } from '/src/modules/auth.js';
+        
+        // Redirecionar admin
+        if (isAdmin()) {
+            window.location.href = '/admin/home';
+        }
+        
+        // Redirecionar não logados
+        if (!estaLogado()) {
+            window.location.href = '/';
+        }
+    </script>
     <section class="home">
         <header class="navbar">
             <h1 class="lidb-titulo">Biblioteca Virtual</h1>
@@ -26,6 +39,7 @@
                     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>
                     Filtros
                 </button>
+                <button class="logout-button" onclick="logout()" style="background: #dc3545; color: white; padding: 10px 15px; border: none; border-radius: 5px; cursor: pointer; margin-left: 10px;">🚪 Sair</button>
             </section>
         </header>
 
@@ -111,5 +125,11 @@
         </footer>
     </section>
 
+    <script>
+        function logout() {
+            localStorage.removeItem('libdb_current_user');
+            window.location.href = '/';
+        }
+    </script>
 </body>
 </html>
