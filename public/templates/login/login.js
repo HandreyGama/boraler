@@ -16,36 +16,35 @@ document.addEventListener('DOMContentLoaded', () => {
         const email = emailInput.value.trim().toLowerCase();
         const senha = passwordInput.value.trim();
 
-        const resultado = fazerLogin(email, senha);
-       if (resultado.sucesso) {
-    Swal.fire({
-        icon: 'success',
-        title: 'Sucesso!',
-        text: resultado.mensagem,
-        confirmButtonColor: '#d95a1a'
-    }).then(() => {
-        window.location.href = '/home';
-    });
-} else {
-    Swal.fire({
-        icon: 'error',
-        title: 'Erro',
-        text: resultado.mensagem,
-        confirmButtonColor: '#d95a1a'
-    });
-}
-    });
-});
-
-const passwordInput = document.getElementById('password-input');
-const togglePassword = document.getElementById('toggle-password');
-
-if (togglePassword) {
-    togglePassword.addEventListener('click', function () {
-        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-        passwordInput.setAttribute('type', type);
+        const resultado = await fazerLogin(email, senha);
         
-        // Troca o nome do ícone (o Google Fonts faz a troca automática pelo texto)
-        this.textContent = type === 'password' ? 'visibility' : 'visibility_off';
+        if (resultado.sucesso) {
+            Swal.fire({
+                icon: 'success',
+                title: 'Sucesso!',
+                text: resultado.mensagem,
+                confirmButtonColor: '#d95a1a'
+            }).then(() => {
+                window.location.href = '/home';
+            });
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro',
+                text: resultado.mensagem,
+                confirmButtonColor: '#d95a1a'
+            });
+        }
     });
+
+    const togglePassword = document.getElementById('toggle-password');
+
+    if (togglePassword) {
+        togglePassword.addEventListener('click', function () {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            this.textContent = type === 'password' ? 'visibility' : 'visibility_off';
+        });
+    }
+});
 }

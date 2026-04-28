@@ -12,9 +12,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const passwordInput = document.getElementById("password-input");
     const showPasswordCheckbox = document.getElementById("show-password-checkbox");
-    console.log(passwordInput, showPasswordCheckbox);
-    showPasswordCheckbox.addEventListener("click", () => {
-        passwordInput.type = showPasswordCheckbox.checked ? "text" : "password";
-    });
+
+    if (showPasswordCheckbox && passwordInput) {
+        showPasswordCheckbox.addEventListener("click", () => {
+            passwordInput.type = showPasswordCheckbox.checked ? "text" : "password";
+        });
+    }
 
 });

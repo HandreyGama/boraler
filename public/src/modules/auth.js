@@ -1,16 +1,21 @@
 const CURRENT_USER_KEY = 'libdb_current_user';
 
 export async function registrarUsuario(email, senha) {
-    try {
-        const response = await fetch('/api/register', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, senha })
-        });
+    const emailNormalizado = String(email).trim().toLowerCase();
+    const senhaNormalizada = String(senha).trim();
 
     if (!emailNormalizado || !senhaNormalizada) {
         return { sucesso: false, mensagem: 'O e-mail e a senha são obrigatórios.' };
     }
+
+    try {
+        const response = await fetch('/api/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: emailNormalizado, senha: senhaNormalizada })
+        });
+
+        const data = await response.json();
 
         if (data.sucesso) {
             const userData = JSON.stringify({
@@ -20,22 +25,29 @@ export async function registrarUsuario(email, senha) {
             localStorage.setItem(CURRENT_USER_KEY, userData);
         }
 
-    if (jaExiste) {
-        return { sucesso: false, mensagem: 'Este e-mail já está cadastrado.' };
+        return data;
+    } catch (error) {
+        console.error('Erro no registro:', error);
+        return { sucesso: false, mensagem: 'Erro ao conectar com o servidor' };
     }
 }
 
 export async function fazerLogin(email, senha) {
-    try {
-        const response = await fetch('/api/login', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, senha })
-        });
+    const emailNormalizado = String(email).trim().toLowerCase();
+    const senhaNormalizada = String(senha).trim();
 
     if (!emailNormalizado || !senhaNormalizada) {
         return { sucesso: false, mensagem: 'O e-mail e a senha são obrigatórios.' };
     }
+
+    try {
+        const response = await fetch('/api/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: emailNormalizado, senha: senhaNormalizada })
+        });
+
+        const data = await response.json();
 
         if (data.sucesso) {
             const userData = JSON.stringify({

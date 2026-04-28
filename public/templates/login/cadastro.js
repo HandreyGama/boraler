@@ -21,17 +21,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const email = emailInput.value.trim().toLowerCase();
         const senha = passwordInput.value.trim();
 
-        if (!nome) {
+        if (!email || !senha) {
             Swal.fire({
                 icon: 'error',
                 title: 'Erro',
-                text: 'Nome é obrigatório',
+                text: 'E-mail e senha são obrigatórios',
                 confirmButtonColor: '#d95a1a'
             });
             return;
         }
 
-        const cadastro = registrarUsuario(email, senha);
+        const cadastro = await registrarUsuario(email, senha);
 
         if (!cadastro.sucesso) {
             Swal.fire({
@@ -43,7 +43,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const login = fazerLogin(email, senha);
+        const login = await fazerLogin(email, senha);
 
         if (login.sucesso) {
             Swal.fire({
