@@ -1,6 +1,7 @@
 import { registrarUsuario, fazerLogin, estaLogado, isAdmin } from '../../src/modules/auth.js';
 
 document.addEventListener('DOMContentLoaded', () => {
+    const CURRENT_USER_KEY = 'libdb_current_user';
     if (estaLogado()) {
         window.location.href = isAdmin() ? '/admin/home' : '/home';
         return;
