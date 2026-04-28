@@ -44,7 +44,18 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
         if (cadastro.sucesso) {
-            localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(cadastro.usuario));
+            Swal.fire({
+                icon: 'success',
+                title: 'Cadastro realizado!',
+                text: 'Sua conta foi criada com sucesso.',
+                confirmButtonText: 'Ir para login',
+                confirmButtonColor: '#d95a1a',
+                allowOutsideClick: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    window.location.href = '/';
+                }
+            });
         }
     });
 });
