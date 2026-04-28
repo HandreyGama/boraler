@@ -119,4 +119,9 @@ app.get('/home', (req,res) =>{
 app.get('/book', (req,res) =>{
     res.sendFile('/templates/book/book.html', { root: path.join(__dirname, 'public') })
 })
+app.get('/admin/home', (req, res) => {
+    res.sendFile('/templates/admin/admin-home.html', { 
+        root: path.join(__dirname, 'public') 
+    });
+});
 app.listen(3000, () => console.log(' *http://localhost:3000!'));
