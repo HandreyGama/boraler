@@ -124,4 +124,14 @@ app.get('/admin/home', (req, res) => {
         root: path.join(__dirname, 'public') 
     });
 });
+app.get('/admin/user-library', (req, res) => {
+    res.sendFile('/templates/admin/user-library.html', { 
+        root: path.join(__dirname, 'public') 
+    });
+});
+app.get('/admin/books-management', (req, res) => {
+    res.sendFile('/templates/admin/books-management.html', { 
+        root: path.join(__dirname, 'public') 
+    });
+});
 app.listen(3000, () => console.log(' *http://localhost:3000!'));
