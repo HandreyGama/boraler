@@ -1,14 +1,14 @@
-# BoraLer
+# 📖 BoraLer
 
-* Aplicacao WEB de Biblioteca Virtual com autenticação local,
+* 💡 Aplicacao WEB de Biblioteca Virtual com autenticação local,
   Busca de livros via Open Library e uma experiencia de leitura com progresso,
   Anotações, destaques, e organização de biblioteca pessoal. 
 
-# Video
+# 📹 Video
 
 https://github.com/user-attachments/assets/daa087a9-6291-479a-bd07-e5bdff16e35f
 
-# Imagens 
+# 🖼️ Imagens 
 
 <img width="1915" height="1017" alt="prints_boraler" src="https://github.com/user-attachments/assets/0a6876d2-6bd3-40e2-8f34-add03419605d" />
 <img width="1916" height="1018" alt="Captura de tela 2026-04-28 120339" src="https://github.com/user-attachments/assets/7ee6306f-5ebd-442c-9778-0ab0f5545f12" />
