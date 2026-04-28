@@ -34,13 +34,26 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         const cadastro = await registrarUsuario(email, senha);
-        localStorage.setItem('libdb_users', JSON.stringify([email, senha]));
-        // salva usuário
+        const usuarios = JSON.parse(localStorage.getItem(USERS_KEY)) || [];
+        // verifica se já existe
+        if (usuarios.find(u => u.email === email)) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Erro',
+                text: 'Usuário já existe',
+            });
+            return;
+        }
+
+        // adiciona usuário corretamente
         usuarios.push({
             email,
-            senha, // (simples por enquanto)
+            senha,
             role: 'user'
         });
+
+        // salva de volta no localStorage
+        localStorage.setItem(USERS_KEY, JSON.stringify(usuarios));
         if (!cadastro.sucesso) {
             Swal.fire({
                 icon: 'error',
