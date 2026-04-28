@@ -1,53 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>BoraLer</title>
-    <link rel="stylesheet" href="../../css/login.css">
+    <link rel="stylesheet" href="../../css/login.css" />
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script type="module" src="/templates/login/anime.js"></script>
     <script type="module" src="/templates/login/login.js"></script>
-</head>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+  </head>
 
-<body>
-  
-           <section id="login">
-            <div id="login-container">
-                <h1 id="login-title"><alt=""> BoraLer</h1>
-                <h3 id="login-subtitle">Bem-vindo de volta </h3>
-                <p id="login-sub">Faça seu login para continuar</p>
-                <form id="login-form">
-            <div></div>
+  <body>
+    <section id="login">
+      <div id="login-container">
+        <h1 id="login-title">BoraLer</h1>
+        <h3 id="login-subtitle">Bem-vindo!</h3>
+        <p id="login-sub">Faça seu login para continuar</p>
+        <form id="login-form">
+          <div></div>
 
-                <label id="text-email" for="email-input">Email: </label>
-                <input type="email" id="email-input" class="text-input" placeholder="user123@gmail.com">
-                
-                <label id="text-senha" for="password-input">Senha: </label>
-                <input type="password" id="password-input" class="text-input" placeholder="*******">
-                
-                <p>Esqueceu a senha?</p>
-                <div id="login-checkboxes">
-                    <div>
-                        <input type="checkbox" name="ver-senha"  id="show-password-checkbox">
-                        <label class="text-ver" for="show-password-checkbox">Mostrar senha</label>
-                    </div>
-                    <div>
-                        <input type="checkbox" name="lembre-se"  id="remember-me-checkbox">
-                        <label class="text-lembre" for="remember-me-checkbox">Lembre-se</label>
-                    </div>
-                    
-                    
-                </div>
-                <div id="login-buttons">
-                    <button class="login-button" type="submit">Login</button>
-                    <a id="register-button" href="/register">Criar nova conta</a>
-                </div>
-            </form>
-        </div>
-        </section>
-  
-    
-    
-</body>
+          <label id="text-email" for="email-input">Email:</label>
+          <input type="email" id="email-input" class="text-input" placeholder="E-mail" />
+
+          <label id="text-senha" for="password-input">Senha:</label>
+          <div class="password-wrapper">
+            <input type="password" id="password-input" class="text-input" placeholder="Senha" />
+            <span id="toggle-password" class="material-symbols-outlined">visibility</span>
+          </div>
+
+          <div id="login-buttons">
+            <button class="login-button" type="submit">Login</button>
+            <a href="/register" id="register-button" class="login-button">Criar nova conta</a>
+          </div>
+        </form>
+      </div>
+    </section>
+  </body>
 </html>
