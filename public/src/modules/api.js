@@ -29,8 +29,14 @@ export async function pegar_livros_por_titulo(titulo){
     return await fetchJsonWithTimeout(query, { docs: [] })
 }
 
-export async function pegar_livros_por_autor(autor){
-    const query = OPEN_LIBRARY_URL + 'search.json?author=' + encodeURIComponent(autor)
+export async function pegar_livros_por_autor(autor, options = {}){
+    const page = Number(options.page || 1)
+    const limit = Number(options.limit || 100)
+    const query =
+        OPEN_LIBRARY_URL +
+        'search.json?author=' + encodeURIComponent(autor) +
+        '&page=' + encodeURIComponent(page) +
+        '&limit=' + encodeURIComponent(limit)
     return await fetchJsonWithTimeout(query, { docs: [] })
 }
 

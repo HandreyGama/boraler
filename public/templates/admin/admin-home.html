@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Usuários</title>
+    <link rel="stylesheet" href="/css/admin.css?v=20260428-2">
+</head>
+<body>
+    <main class="admin-shell">
+        <header class="admin-hero">
+            <h1 class="admin-title">Painel Administrativo</h1>
+            <p class="admin-subtitle">Visualize usuários, entre na biblioteca de cada conta e gerencie o acervo global de livros da plataforma.</p>
+            <div class="admin-toolbar">
+                <button class="btn btn-primary" onclick="goToBooks()">Gerenciar acervo global</button>
+                <button class="btn btn-muted" onclick="refreshUsers()">Atualizar lista</button>
+                <button class="btn btn-danger" onclick="logout()">Sair</button>
+            </div>
+        </header>
+
+        <section class="admin-content">
+            <article class="panel">
+                <h2 class="panel-title">Usuários cadastrados</h2>
+                <div id="users-container" class="users-grid">
+                    <div class="empty">Carregando usuários...</div>
+                </div>
+            </article>
+        </section>
+    </main>
+
+    <script type="module">
+        import { obterTodosUsuarios, promoverParaAdmin, rebaixarDeAdmin, deletarUsuario } from '/src/modules/admin.js';
+        import { estaLogado, isAdmin, fazerLogout } from '/src/modules/auth.js';
+
+        if (!estaLogado() || !isAdmin()) {
+            window.location.href = '/';
+        }
+
+        async function carregarUsuarios() {
+            const container = document.getElementById('users-container');
+            const usuarios = await obterTodosUsuarios();
+
+            if (!usuarios || usuarios.length === 0) {
+                container.innerHTML = '<div class="empty">Nenhum usuário cadastrado.</div>';
+                return;
+            }
+
+            container.innerHTML = usuarios.map((usuario) => `
+                <article class="card">
+                    <h3>${usuario.email}</h3>
+                    <span class="role-tag ${usuario.role === 'admin' ? 'role-admin' : 'role-user'}">${usuario.role === 'admin' ? 'ADMIN' : 'USER'}</span>
+                    <p><strong>Criado em:</strong> ${new Date(usuario.criadoEm).toLocaleString('pt-BR')}</p>
+                    <div class="card-actions">
+                        <button class="btn btn-primary" onclick="acessarBiblioteca('${encodeURIComponent(usuario.email)}')">Biblioteca</button>
+                        ${usuario.role === 'user'
+                            ? `<button class="btn btn-success" onclick="promover('${encodeURIComponent(usuario.email)}')">Promover</button>`
+                            : `<button class="btn btn-muted" onclick="rebaixar('${encodeURIComponent(usuario.email)}')">Rebaixar</button>`}
+                        <button class="btn btn-danger" onclick="deletar('${encodeURIComponent(usuario.email)}')">Excluir</button>
+                    </div>
+                </article>
+            `).join('');
+        }
+
+        window.acessarBiblioteca = function(encodedEmail) {
+            sessionStorage.setItem('admin-user-email', decodeURIComponent(encodedEmail));
+            window.location.href = '/admin/user-library';
+        };
+
+        window.promover = async function(encodedEmail) {
+            const email = decodeURIComponent(encodedEmail);
+            if (!confirm(`Promover ${email} para admin?`)) return;
+            const result = await promoverParaAdmin(email);
+            alert(result.mensagem || 'Operação concluída');
+            await carregarUsuarios();
+        };
+
+        window.rebaixar = async function(encodedEmail) {
+            const email = decodeURIComponent(encodedEmail);
+            if (!confirm(`Rebaixar ${email} para user?`)) return;
+            const result = await rebaixarDeAdmin(email);
+            alert(result.mensagem || 'Operação concluída');
+            await carregarUsuarios();
+        };
+
+        window.deletar = async function(encodedEmail) {
+            const email = decodeURIComponent(encodedEmail);
+            if (!confirm(`Excluir usuário ${email}? Esta ação não pode ser desfeita.`)) return;
+            const result = await deletarUsuario(email);
+            alert(result.mensagem || 'Operação concluída');
+            await carregarUsuarios();
+        };
+
+        window.goToBooks = function() {
+            window.location.href = '/admin/books-management';
+        };
+
+        window.refreshUsers = async function() {
+            await carregarUsuarios();
+        };
+
+        window.logout = function() {
+            fazerLogout();
+            window.location.href = '/';
+        };
+
+        carregarUsuarios();
+    </script>
+</body>
+</html>

@@ -1,8 +1,8 @@
-import { fazerLogin, estaLogado } from '../../src/modules/auth.js';
+import { fazerLogin, estaLogado, isAdmin } from '../../src/modules/auth.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     if (estaLogado()) {
-        window.location.href = '/home';
+        window.location.href = isAdmin() ? '/admin/home' : '/home';
         return;
     }
 
@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const emailInput = document.getElementById('email-input');
     const passwordInput = document.getElementById('password-input');
 
-    form.addEventListener('submit', (event) => {
+    form.addEventListener('submit', async (event) => {
         event.preventDefault();
 
         const email = emailInput.value.trim().toLowerCase();

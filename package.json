@@ -5,6 +5,9 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
+    "init": "node initialize.js",
+    "start": "node app.js",
+    "dev": "npm run init && npm start",
     "test": "app"
   },
   "author": "",
