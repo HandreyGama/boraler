@@ -69,7 +69,6 @@ function captureDom() {
     dom.btnFullscreen = document.getElementById('btn-fullscreen')
     dom.pageIndicator = document.getElementById('page-indicator')
     dom.readerStage = document.getElementById('reader-stage')
-    dom.ratingContainer = document.getElementById("rating-container");
 }
 
 async function recuperarLivroAusente(bookId) {
