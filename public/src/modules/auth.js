@@ -8,7 +8,9 @@ export async function registrarUsuario(email, senha) {
             body: JSON.stringify({ email, senha })
         });
 
-        const data = await response.json();
+    if (!emailNormalizado || !senhaNormalizada) {
+        return { sucesso: false, mensagem: 'O e-mail e a senha são obrigatórios.' };
+    }
 
         if (data.sucesso) {
             const userData = JSON.stringify({
@@ -18,10 +20,8 @@ export async function registrarUsuario(email, senha) {
             localStorage.setItem(CURRENT_USER_KEY, userData);
         }
 
-        return data;
-    } catch (error) {
-        console.error('Erro no cadastro:', error);
-        return { sucesso: false, mensagem: 'Erro ao conectar com o servidor' };
+    if (jaExiste) {
+        return { sucesso: false, mensagem: 'Este e-mail já está cadastrado.' };
     }
 }
 
@@ -33,7 +33,9 @@ export async function fazerLogin(email, senha) {
             body: JSON.stringify({ email, senha })
         });
 
-        const data = await response.json();
+    if (!emailNormalizado || !senhaNormalizada) {
+        return { sucesso: false, mensagem: 'O e-mail e a senha são obrigatórios.' };
+    }
 
         if (data.sucesso) {
             const userData = JSON.stringify({

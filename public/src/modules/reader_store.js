@@ -77,6 +77,7 @@ export function addBookToMyList(book, selectBook = false) {
         status: current.status || 'quero-ler',
         notes: current.notes || '',
         highlights: Array.isArray(current.highlights) ? current.highlights : [],
+        rating: Number(current.rating ?? 0),
         updatedAt: new Date().toISOString()
     }
 
