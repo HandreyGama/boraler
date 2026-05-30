@@ -20,4 +20,7 @@ app.get('/home', (req,res) =>{
 app.get('/book', (req,res) =>{
     res.sendFile('/templates/book/book.html', { root: path.join(__dirname, 'public') })
 })
+app.get('/reset-senha', (req,res) =>{
+    res.sendFile('/templates/login/senha.html', { root: path.join(__dirname, 'public') })
+})
 app.listen(3000, () => console.log(' *http://localhost:3000!'));

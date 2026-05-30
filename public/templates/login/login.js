@@ -1,51 +1,52 @@
-import { fazerLogin, estaLogado } from '../../src/modules/auth.js';
+import { fazerLogin, estaLogado } from "../../src/modules/auth.js";
 
-document.addEventListener('DOMContentLoaded', () => {
-    if (estaLogado()) {
-        window.location.href = '/home';
-        return;
+document.addEventListener("DOMContentLoaded", () => {
+  if (estaLogado()) {
+    window.location.href = "/home";
+    return;
+  }
+
+  const form = document.getElementById("login-form");
+  const emailInput = document.getElementById("email-input");
+  const passwordInput = document.getElementById("password-input");
+
+  form.addEventListener("submit", (event) => {
+    event.preventDefault();
+
+    const email = emailInput.value.trim().toLowerCase();
+    const senha = passwordInput.value.trim();
+
+    const resultado = fazerLogin(email, senha);
+    if (resultado.sucesso) {
+      Swal.fire({
+        icon: "success",
+        title: "Sucesso!",
+        text: resultado.mensagem,
+        confirmButtonColor: "#d95a1a",
+      }).then(() => {
+        window.location.href = "/home";
+      });
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "Erro",
+        text: resultado.mensagem,
+        confirmButtonColor: "#d95a1a",
+      });
     }
-
-    const form = document.getElementById('login-form');
-    const emailInput = document.getElementById('email-input');
-    const passwordInput = document.getElementById('password-input');
-
-    form.addEventListener('submit', (event) => {
-        event.preventDefault();
-
-        const email = emailInput.value.trim().toLowerCase();
-        const senha = passwordInput.value.trim();
-
-        const resultado = fazerLogin(email, senha);
-       if (resultado.sucesso) {
-    Swal.fire({
-        icon: 'success',
-        title: 'Sucesso!',
-        text: resultado.mensagem,
-        confirmButtonColor: '#d95a1a'
-    }).then(() => {
-        window.location.href = '/home';
-    });
-} else {
-    Swal.fire({
-        icon: 'error',
-        title: 'Erro',
-        text: resultado.mensagem,
-        confirmButtonColor: '#d95a1a'
-    });
-}
-    });
+  });
 });
 
-const passwordInput = document.getElementById('password-input');
-const togglePassword = document.getElementById('toggle-password');
+const passwordInput = document.getElementById("password-input");
+const togglePassword = document.getElementById("toggle-password");
 
 if (togglePassword) {
-    togglePassword.addEventListener('click', function () {
-        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-        passwordInput.setAttribute('type', type);
-        
-        // Troca o nome do ícone (o Google Fonts faz a troca automática pelo texto)
-        this.textContent = type === 'password' ? 'visibility' : 'visibility_off';
-    });
+  togglePassword.addEventListener("click", function () {
+    const type =
+      passwordInput.getAttribute("type") === "password" ? "text" : "password";
+    passwordInput.setAttribute("type", type);
+
+    // Troca o nome do ícone (o Google Fonts faz a troca automática pelo texto)
+    this.textContent = type === "password" ? "visibility" : "visibility_off";
+  });
 }

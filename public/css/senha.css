@@ -81,6 +81,21 @@ body {
     outline: none;
 }
 
+.text-input-senha {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 10px 0 20px 0;
+    border-radius: 10px;
+    position: relative;
+    bottom: -8px;
+
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+
+    outline: none;
+}
+
 .text-input::placeholder {
     color: rgba(255, 255, 255, 0.6);
 }
@@ -152,12 +167,24 @@ p {
     opacity: 0.9;
 }
 
-#register-button {
-    background: transparent;
+.login-button-reset-senha:hover {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
     border: none;
-    color: #ccc;
+    color: white !important;
+    /* Força a cor branca mesmo sendo um link */
+    font-weight: bold;
     cursor: pointer;
-    font-size: 14px;
+    transition: 0.3s;
+
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    box-sizing: border-box;
+
+    position: relative;
+    bottom: 40px;
 }
 
 #register-button:hover {
@@ -202,7 +229,7 @@ a {
     color: #fff;
 }
 
-.login-button-reset-senha {
+.login-reset-senha {
     width: 100%;
     padding: 12px;
     border-radius: 10px;
@@ -219,10 +246,16 @@ a {
     box-sizing: border-box;
 
     position: relative;
-    bottom: 40px;
+    bottom: 10px;
 }
 
 .login-button-reset-senha:hover {
     transform: scale(1.03);
     opacity: 0.9;
+}
+
+#text-confirmar-senha {
+    position: relative;
+    bottom: 30px; /* Faz ele descer em comparação ao padrão de 40px */
+    font-size: 14px;
 }
