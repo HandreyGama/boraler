@@ -4,7 +4,7 @@ import {
   estaLogado,
 } from "../../src/modules/auth.js";
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   if (estaLogado()) {
     window.location.href = "/home";
     return;
@@ -20,24 +20,25 @@ document.addEventListener("DOMContentLoaded", () => {
     window.location.href = "/";
   });
 
-  form.addEventListener("submit", (event) => {
+  form.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     const nome = nomeInput.value.trim();
     const email = emailInput.value.trim().toLowerCase();
     const senha = passwordInput.value.trim();
 
+
     if (!nome) {
       Swal.fire({
         icon: "error",
-        title: "Erro",
+        title: "Erro 1",
         text: "Nome é obrigatório",
         confirmButtonColor: "#d95a1a",
       });
       return;
     }
 
-    const cadastro = registrarUsuario(email, senha);
+    const cadastro = await registrarUsuario(email, senha);
 
     if (!cadastro.sucesso) {
       Swal.fire({
@@ -49,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    const login = fazerLogin(email, senha);
+    const login = await fazerLogin(email, senha);
 
     if (login.sucesso) {
       Swal.fire({
