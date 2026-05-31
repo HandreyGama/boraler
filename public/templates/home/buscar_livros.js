@@ -322,12 +322,6 @@ function renderizarLivros(listaLivros) {
         btnAddLista.className = 'btn-add-lista'
         btnAddLista.type = 'button'
         btnAddLista.textContent = jaAdicionado ? 'Adicionado' : 'Adicionar'
-        btnAddLista.addEventListener('click', (event) => {
-            event.stopPropagation()
-            adicionarLivroNaBiblioteca(livro, btnAddLista)
-        })
-
-        acoes.appendChild(btnAddLista)
 
         info.appendChild(titulo)
         info.appendChild(autor)

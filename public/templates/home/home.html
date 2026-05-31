@@ -22,6 +22,16 @@
         if (!estaLogado()) {A
             window.location.href = '/';
         }
+        
+    </script>
+        <script>
+        window.addEventListener("pageshow", () =>{
+            if(sessionStorage.getItem("recarregarPagina") === "true"){
+                sessionStorage.removeItem("recarregarPagina")
+                location.reload()
+            }
+        })
+
     </script>
     <section class="home">
         <header class="navbar">

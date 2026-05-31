@@ -10,7 +10,15 @@
 </head>
 
 <body>
+    <script>
+        window.addEventListener("pageshow", () =>{
+            if(sessionStorage.getItem("recarregarPagina") === "true"){
+                sessionStorage.removeItem("recarregarPagina")
+                location.reload()
+            }
+        })
 
+    </script>
     <header class="banner">
 
         <div class="banner-content">
