@@ -31,7 +31,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     if (!nome) {
       Swal.fire({
         icon: "error",
-        title: "Erro 1",
+        title: "Ops...",
         text: "Nome é obrigatório",
         confirmButtonColor: "#d95a1a",
       });
