@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Biblioteca</title>
+    <link rel="stylesheet" href="../../css/minha_biblioteca.css">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" />
+</head>
+
+<body>
+
+    <header class="banner">
+
+        <div class="banner-content">
+            <h1>Minha Biblioteca</h1>
+            <p>Bem-vindo à sua biblioteca!</p>
+        </div>
+
+        <div class="banner-botoes">
+        <div class="banner-botoes">
+        <button id="dark-mode-btn">
+            <span class="material-symbols-outlined">dark_mode</span>
+        </button>
+
+        <button id="voltar-btn">
+            <span class="material-symbols-outlined">arrow_back</span>
+        </button>
+    </div>  
+        </div>
+
+    </header>
+
+    <main>
+
+        <section class="estatisticas">
+
+            <div class="card-status">
+                  <div class="status-icon livros">
+        <span class="material-symbols-outlined">menu_book</span>
+    </div>
+
+    <div class="status-info">
+        <span id="total-livros">0</span>
+        <p>Livros adicionados</p>
+    </div>
+            </div>
+
+            <div class="card-status">
+                <div class="status-icon favoritos">
+        <span class="material-symbols-outlined">star</span>
+    </div>
+
+    <div class="status-info">
+        <span id="total-favoritos">0</span>
+        <p>Favoritos</p>
+    </div>
+            </div>
+
+            <div class="card-status">
+                   <div class="status-icon lendo">
+        <span class="material-symbols-outlined">auto_stories</span>
+    </div>
+
+    <div class="status-info">
+        <span id="total-lendo">0</span>
+        <p>Lendo agora</p>
+    </div>
+            </div>
+
+            <div class="card-status">
+                 <div class="status-icon concluidos">
+        <span class="material-symbols-outlined">check_circle</span>
+    </div>
+
+    <div class="status-info">
+        <span id="total-concluidos">0</span>
+        <p>Concluídos</p>
+    </div>
+            </div>
+
+        </section>
+
+        <section class="search">
+
+            <input
+                type="text"
+                id="search-input"
+                placeholder="Buscar na sua biblioteca..."
+            >
+
+        </section>
+
+        <section class="filtros">
+
+            <button class="active" data-filter="todos">Todos</button>
+            <button data-filter="lendo">Lendo</button>
+            <button data-filter="quero-ler">Quero Ler</button>
+            <button data-filter="concluidos">Concluídos</button>
+            <button data-filter="favoritos">Favoritos</button>
+
+        </section>
+
+        <h2 class="secao-titulo">Meus Livros</h2>   
+
+        <section
+            class="books-grid"
+            id="books-grid">
+
+     
+        </section>
+        
+
+    </main>
+
+<script type="module" src="/templates/minha_biblioteca/minha_biblioteca.js"></script>
+
+</body>
+</html>

@@ -119,6 +119,9 @@ app.get('/home', (req,res) =>{
 app.get('/book', (req,res) =>{
     res.sendFile('/templates/book/book.html', { root: path.join(__dirname, 'public') })
 })
+app.get('/minha_biblioteca', (req,res) =>{
+    res.sendFile('/templates/minha_biblioteca/minha_biblioteca.html', { root: path.join(__dirname, 'public') })
+})
 app.get('/reset-senha', (req,res) =>{
     res.sendFile('/templates/login/senha.html', { root: path.join(__dirname, 'public') })
 })
