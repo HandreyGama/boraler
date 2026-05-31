@@ -318,11 +318,6 @@ function renderizarLivros(listaLivros) {
         const acoes = document.createElement('div')
         acoes.className = 'livro-acoes'
 
-        const btnAddLista = document.createElement('button')
-        btnAddLista.className = 'btn-add-lista'
-        btnAddLista.type = 'button'
-        btnAddLista.textContent = jaAdicionado ? 'Adicionado' : 'Adicionar'
-
         info.appendChild(titulo)
         info.appendChild(autor)
         info.appendChild(tag)
@@ -622,8 +617,6 @@ function normalizarTexto(texto) {
 }
 
 function abrirDetalhesLivro(livro) {
-    upsertBook(livro)
-
     window.location.href = `/book?id=${encodeURIComponent(livro.id)}`
 }
 
