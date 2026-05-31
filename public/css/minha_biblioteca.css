@@ -397,8 +397,7 @@ main {
 }
 
 .dark-mode .card-status,
-.dark-mode .book-card,
-.dark-mode .search input {
+.dark-mode .book-card {
   background: #2b2521;
   color: #f5efe6;
   border-color: #4a4038;
