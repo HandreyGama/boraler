@@ -10,6 +10,19 @@
     <title>Home - BoraLer</title>
 </head>
 <body>
+    <script type="module">
+        import { estaLogado, isAdmin } from '/src/modules/auth.js';
+        
+        // Redirecionar admin
+        if (isAdmin()) {
+            window.location.href = '/admin/home';
+        }
+        
+        // Redirecionar não logados
+        if (!estaLogado()) {
+            window.location.href = '/';
+        }
+    </script>
     <section class="home">
         <header class="navbar">
 
