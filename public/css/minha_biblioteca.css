@@ -23,8 +23,8 @@ body {
 }
 
 .banner {
-  height: 180px;
-  padding: 40px;
+  min-height: 300px;
+  padding: 60px clamp(32px, 7vw, 100px) 50px;
   background-image: url("../assets/fundo.jpg");
   background-size: cover;
   background-position: center;
@@ -76,7 +76,11 @@ body {
 .banner-botoes .material-symbols-outlined {
   font-size: 24px;
 }
-
+.banner-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
 #dark-mode-btn {
   color: #f2c94c;
 }
@@ -85,7 +89,7 @@ body {
   color: #ffffff;
 }
 main {
-  padding: 28px 50px;
+  padding: 46px clamp(32px, 7vw, 100px) 28px;
 }
 
 .estatisticas {
@@ -111,18 +115,13 @@ main {
   box-shadow: 0 12px 32px rgba(58,34,17,0.18);
 }
 
-.search {
-  margin-bottom: 14px;
+
+
+.secao-titulo {
+  margin-bottom: 30px;
 }
 
-.search input {
-  width: 380px;
-  padding: 14px 18px;
-  border: 1px solid #e0cdb5;
-  border-radius: 8px;
-  background: #fffaf3;
-  outline: none;
-}
+
 
 .filtros {
   display: flex;
@@ -324,25 +323,25 @@ main {
   font-size: 32px;
 }
 
-/* Livros */
+
 .status-icon.livros {
   background: #f0e6d6;
   color: #7a5735;
 }
 
-/* Favoritos */
+
 .status-icon.favoritos {
   background: #fdedca;
   color: #d4830a;
 }
 
-/* Lendo */
+
 .status-icon.lendo {
   background: #f1e7fa;
   color: #9b4db3;
 }
 
-/* Concluídos */
+
 .status-icon.concluidos {
   background: #e6f1dd;
   color: #5d9c3f;
@@ -428,4 +427,51 @@ main {
 
 .dark-mode .sem-livros p {
   color: #cbb8a4;
+}
+.search {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  width: clamp(280px, 55vw, 700px);
+
+  background: rgba(255,255,255,0.95);
+  border: 1.5px solid rgba(58,34,17,0.15);
+  border-radius: 8px;
+
+  padding: 8px 12px;
+
+  box-shadow: 0 2px 16px rgba(58,34,17,0.1);
+  transition: box-shadow 0.3s ease;
+
+  margin-top: 28px;
+}
+
+.search:focus-within {
+  border-color: #d4830a;
+
+  box-shadow:
+    0 0 0 3px rgba(212,131,10,.12),
+    0 4px 24px rgba(212,131,10,.18);
+}
+
+.search-icon {
+  color: #7a5c46;
+  display: flex;
+  align-items: center;
+  margin-left: 8px;
+}
+
+.search input {
+  flex: 1 1 220px;
+  min-width: 120px;
+  height: 40px;
+
+  background: transparent;
+  border: none;
+  outline: none;
+
+  font-family: 'Lato', sans-serif;
+  font-size: 0.95rem;
+  color: var(--text); 
 }
