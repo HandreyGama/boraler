@@ -78,14 +78,13 @@ async function iniciarTutorial() {
 
     localStorage.setItem('tutorialVisto', 'true');
 }
-document.addEventListener('DOMContentLoaded', () => {
-    
 
-     if (!localStorage.getItem('tutorialVisto')) {
+document.addEventListener('DOMContentLoaded', () => {
+    if (!localStorage.getItem('tutorialVisto')) {
         iniciarTutorial();
     }
-    
-    const botao = document.getElementById('logout-button');
+
+    const botao = document.getElementById('btn-logout');
 
     botao.addEventListener('click', () => {
         Swal.fire({
@@ -103,4 +102,39 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     });
+});
+
+/* Tema */
+
+const themeToggleBtn = document.getElementById('theme-toggle');
+const botao = document.getElementById('btn-logout');
+
+function aplicarTema(tema) {
+    if (tema === 'dark') {
+        document.body.classList.add('dark-mode');
+        if (themeToggleBtn) themeToggleBtn.querySelector('.icon-theme').textContent = 'light_mode';
+    } else {
+        document.body.classList.remove('dark-mode');
+        if (themeToggleBtn) themeToggleBtn.querySelector('.icon-theme').textContent = 'dark_mode';
+    }
+}
+
+const currentTheme = localStorage.getItem('theme') || 'light';
+aplicarTema(currentTheme);
+
+if (themeToggleBtn) {
+    themeToggleBtn.addEventListener('click', () => {
+        document.body.classList.toggle('dark-mode');
+        const isDark = document.body.classList.contains('dark-mode');
+        const novoTema = isDark ? 'dark' : 'light';
+        
+        localStorage.setItem('theme', novoTema);
+        if (themeToggleBtn) themeToggleBtn.querySelector('.icon-theme').textContent = isDark ? 'light_mode' : 'dark_mode';
+    });
+}
+
+window.addEventListener('storage', (event) => {
+    if (event.key === 'theme') {
+        aplicarTema(event.newValue || 'light');
+    }
 });
