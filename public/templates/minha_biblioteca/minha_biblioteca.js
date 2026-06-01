@@ -12,6 +12,37 @@ let filtroAtual = "todos";
 let livrosDaBiblioteca = [];
 
 document.addEventListener("DOMContentLoaded", () => {
+const themeToggleBtn = document.getElementById('theme-toggle');
+  function aplicarTemaBiblioteca(tema) {
+      if (tema === 'dark') {
+          document.body.classList.add('dark-mode');
+          if (themeToggleBtn) themeToggleBtn.querySelector('.icon-theme').textContent = 'light_mode';
+      } else {
+          document.body.classList.remove('dark-mode');
+          if (themeToggleBtn) themeToggleBtn.querySelector('.icon-theme').textContent = 'dark_mode';
+      }
+  }
+
+  const savedTheme = localStorage.getItem('theme') || 'light';
+  aplicarTemaBiblioteca(savedTheme);
+
+  if (themeToggleBtn) {
+      themeToggleBtn.addEventListener('click', () => {
+          document.body.classList.toggle('dark-mode');
+          const isDark = document.body.classList.contains('dark-mode');
+          const novoTema = isDark ? 'dark' : 'light';
+          
+          localStorage.setItem('theme', novoTema);
+          if (themeToggleBtn) themeToggleBtn.querySelector('.icon-theme').textContent = isDark ? 'light_mode' : 'dark_mode';
+      });
+  }
+
+  window.addEventListener('storage', (event) => {
+      if (event.key === 'theme') {
+          aplicarTemaBiblioteca(event.newValue || 'light');
+      }
+  });
+
   carregarMinhaBiblioteca();
 
   botoesFiltro.forEach((botao) => {

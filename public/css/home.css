@@ -41,7 +41,7 @@ body {
     min-height: 320px;
     padding: 60px clamp(32px, 7vw, 100px) 50px;
     background:
-        url('https://images.unsplash.com/photo-1507842217343-583bb7270b66?w=1600&q=80') center / cover no-repeat;
+        url("../assets/fundo.jpg") center / cover no-repeat;
 }
 
 .lidb-titulo {
@@ -565,4 +565,140 @@ body {
     font-weight: 600;
     text-align: center;
     padding: 8px;
+}
+
+/* Tema Escuro */
+
+.top-nav-actions {
+    position: absolute;
+    top: 60px;
+    right: clamp(32px, 7vw, 100px);
+    display: flex;
+    gap: 12px;
+    z-index: 1001;
+}
+
+.btn-header {
+    background: rgba(255, 255, 255, 0.15) !important;
+    backdrop-filter: blur(10px) !important;
+    -webkit-backdrop-filter: blur(10px) !important;
+    color: #faf6ee !important;
+    border: none !important;
+    width: 44px;
+    height: 44px;
+    border-radius: 50% !important;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.25s ease !important;
+}
+
+.btn-header:hover {
+    transform: translateY(-2px) !important;
+}
+
+body.dark-mode {
+    background: #1f1a17 !important;
+    color: #f5efe6 !important;
+}
+
+body.dark-mode .main-content {
+    background: #1f1a17 !important;
+}
+
+body.dark-mode .sidebar {
+    background: #1f1a17 !important;
+    border: 1px solid #4a4038 !important;
+    border-right: 2px solid #4a4038 !important; 
+}
+
+body.dark-mode .sidebar-section {
+    border: none !important;
+    background: transparent !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+}
+
+body.dark-mode .sidebar-divider {
+    border-top: 1px solid #4a4038 !important;
+}
+
+body.dark-mode .sidebar-label,
+body.dark-mode .categoria-item,
+body.dark-mode .filter-group label,
+body.dark-mode .stat-row span,
+body.dark-mode .stat-num,
+body.dark-mode h1,
+body.dark-mode h2,
+body.dark-mode h3,
+body.dark-mode .secao-titulo {
+    color: #ffffff !important;
+}
+
+body.dark-mode .categoria-item:not(.active) {
+    color: #cbb8a4 !important;
+}
+
+body.dark-mode .categoria-item.active {
+    color: #ffffff !important;
+    background: #4a4038 !important;
+    border-radius: 6px;
+}
+
+body.dark-mode .search-container,
+body.dark-mode .search-box-wrapper {
+    background: #2b2521 !important;
+    border: 1px solid #4a4038 !important;
+}
+
+body.dark-mode .search-input,
+body.dark-mode .sidebar-select,
+body.dark-mode .search-container input,
+body.dark-mode .search-container select {
+    background: #1f1a17 !important;
+    color: #f5efe6 !important;
+    border: 1px solid #4a4038 !important;
+}
+
+body.dark-mode .sidebar-select option {
+    background: #1f1a17 !important;
+    color: #f5efe6 !important;
+}
+
+body.dark-mode .sidebar-action {
+    background: #2b2521 !important;
+    color: #f5efe6 !important;
+    border: 1px solid #4a4038 !important;
+    transition: var(--transition, 0.25s ease);
+}
+
+body.dark-mode .sidebar-action:hover {
+    background: #4a4038 !important;
+    color: #ffffff !important;
+}
+
+body.dark-mode .livros-grid .book-card,
+body.dark-mode .book-card,
+body.dark-mode .livro-item,
+body.dark-mode .card {
+    background: #2b2521 !important;
+    color: #f5efe6 !important;
+    border: 1px solid #4a4038 !important;
+}
+
+body.dark-mode .livros-grid .book-card,
+body.dark-mode .book-card,
+body.dark-mode .livro-item,
+body.dark-mode .livro-card {
+    background: #2b2521 !important;
+    color: #f5efe6 !important;
+    border: 1px solid #4a4038 !important;
+}
+
+body.dark-mode .book-card h3,
+body.dark-mode .book-card p,
+body.dark-mode .livro-item h3,
+body.dark-mode .livro-item p {
+    color: #f5efe6 !important;
 }
