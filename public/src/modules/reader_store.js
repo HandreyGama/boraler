@@ -62,7 +62,7 @@ export function saveReaderState(state) {
 }
 
 export function upsertBook(book) {
-    return addBookToMyList(book, true)
+    return addBookToMyList({ ...book, inMyList: false }, true)
 }
 
 export function addBookToMyList(book, selectBook = false) {
@@ -72,7 +72,7 @@ export function addBookToMyList(book, selectBook = false) {
         ...current,
         ...book,
         readingProgress: Number(current.readingProgress || 0),
-        inMyList: current.inMyList ?? true,
+        inMyList: book.inMyList ?? current.inMyList ?? true,
         favorite: current.favorite ?? false,
         status: current.status || 'quero-ler',
         notes: current.notes || '',
