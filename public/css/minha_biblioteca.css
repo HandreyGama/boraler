@@ -23,7 +23,7 @@ body {
 }
 
 .banner {
-  min-height: 300px;
+  min-height: 320px;
   padding: 60px clamp(32px, 7vw, 100px) 50px;
   background-image: url("../assets/fundo.jpg");
   background-size: cover;
@@ -38,6 +38,8 @@ body {
   font-family: 'Playfair Display', serif;
   font-size: clamp(2rem, 5vw, 3.2rem);
   font-weight: 700;
+  color: var(--cream);
+  margin: 0 0 10px 0;
 }
 
 .banner p {

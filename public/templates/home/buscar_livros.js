@@ -13,16 +13,16 @@ import {
 
 const CATEGORIA_LABELS = {
     todos: 'Todos os Livros',
-    ficcao: 'Ficcao',
-    'nao-ficcao': 'Nao-ficcao',
+    ficcao: 'Ficção',
+    'nao-ficcao': 'Não-ficção',
     romance: 'Romance',
     fantasia: 'Fantasia',
-    misterio: 'Misterio',
+    misterio: 'Mistério',
     biografia: 'Biografia',
-    infantojuvenil: 'Infantojuvenil',
+    infantojuvenil: 'Infanto Juvenil',
     poesia: 'Poesia',
     drama: 'Drama',
-    'ficcao-cientifica': 'Ficcao Cientifica'
+    'ficcao-cientifica': 'Ficção Científica'
 }
 
 const dom = {}
