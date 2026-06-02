@@ -1,20 +1,16 @@
 import anime from "https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.es.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-  anime({
-    targets: "#login",
-    opacity: [0, 1],
-    translateY: [50, 0],
-    duration: 800,
-    easing: "easeOutQuad",
-  });
+  // Executa a animação de entrada da seção #login
+  const loginSection = document.getElementById("login");
 
-  const passwordInput = document.getElementById("password-input");
-  const showPasswordCheckbox = document.getElementById(
-    "show-password-checkbox",
-  );
-  console.log(passwordInput, showPasswordCheckbox);
-  showPasswordCheckbox.addEventListener("click", () => {
-    passwordInput.type = showPasswordCheckbox.checked ? "text" : "password";
-  });
+  if (loginSection) {
+    anime({
+      targets: loginSection,
+      opacity: [0, 1],
+      translateY: [50, 0],
+      duration: 800,
+      easing: "easeOutQuad",
+    });
+  }
 });

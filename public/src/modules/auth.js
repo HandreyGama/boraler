@@ -1,5 +1,9 @@
 const CURRENT_USER_KEY = 'libdb_current_user';
 
+// ==========================================
+// OPERAÇÕES ASSÍNCRONAS (API / SERVIDOR)
+// ==========================================
+
 export async function registrarUsuario(email, senha) {
     const emailNormalizado = String(email).trim().toLowerCase();
     const senhaNormalizada = String(senha).trim();
@@ -64,6 +68,10 @@ export async function fazerLogin(email, senha) {
     }
 }
 
+// ==========================================
+// GERENCIAMENTO DE SESSÃO LOCAL (LOCALSTORAGE)
+// ==========================================
+
 export function fazerLogout() {
     localStorage.removeItem(CURRENT_USER_KEY);
 }
@@ -93,4 +101,38 @@ export function estaLogado() {
 
 export function isAdmin() {
     return obterRoleUsuarioAtual() === 'admin';
+}
+
+// ==========================================
+// RECOVERY / ATUALIZAÇÕES DE CONTA
+// ==========================================
+
+// ==========================================
+// RECOVERY / ATUALIZAÇÕES DE CONTA
+// ==========================================
+
+export async function atualizarSenha(email, novaSenha) {
+    const emailNormalizado = String(email).trim().toLowerCase();
+    const senhaNormalizada = String(novaSenha || '').trim();
+
+    // Corrigido de 'message' para 'mensagem' para manter o padrão do seu projeto
+    if (!emailNormalizado || !senhaNormalizada) {
+        return { sucesso: false, mensagem: 'O e-mail e a nova senha são obrigatórios.' };
+    }
+
+    try {
+        // Agora envia o comando para a API do seu servidor redefinir no banco de dados
+        const response = await fetch('/api/update-password', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: emailNormalizado, senha: senhaNormalizada })
+        });
+
+        const data = await response.json();
+        return data; // Retorna a resposta que vier do servidor (sucesso ou erro)
+        
+    } catch (error) {
+        console.error('Erro ao atualizar senha:', error);
+        return { sucesso: false, mensagem: 'Erro ao conectar com o servidor' };
+    }
 }
