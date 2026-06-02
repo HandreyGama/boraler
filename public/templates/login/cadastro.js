@@ -4,7 +4,7 @@ import {
   estaLogado,
 } from "../../src/modules/auth.js";
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   if (estaLogado()) {
     window.location.href = "/home";
     return;
@@ -17,41 +17,33 @@ document.addEventListener("DOMContentLoaded", () => {
   const registerButton = document.getElementById("register-button");
   const togglePassword = document.getElementById("toggle-password");
 
-  if (registerButton) {
-    registerButton.addEventListener("click", () => {
-      window.location.href = "/";
-    });
-  }
+  loginButton.addEventListener("click", () => {
+    window.location.href = "/";
+  });
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
 
   if (form) {
     form.addEventListener("submit", (event) => {
       event.preventDefault();
 
-      const nome = nomeInput.value.trim();
-      const email = emailInput.value.trim().toLowerCase();
-      const senha = passwordInput.value.trim();
 
-      if (!nome) {
-        Swal.fire({
-          icon: "error",
-          title: "Erro",
-          text: "Nome é obrigatório",
-          confirmButtonColor: "#d95a1a",
-        });
-        return;
-      }
+    if (!nome) {
+      Swal.fire({
+        icon: "error",
+        title: "Ops...",
+        text: "Nome é obrigatório",
+        confirmButtonColor: "#d95a1a",
+      });
+      return;
+    }
+
+    const cadastro = await registrarUsuario(email, senha);
 
       const cadastro = registrarUsuario(email, senha);
 
-      if (!cadastro.sucesso) {
-        Swal.fire({
-          icon: "error",
-          title: "Erro",
-          text: cadastro.mensagem,
-          confirmButtonColor: "#d95a1a",
-        });
-        return;
-      }
+    const login = await fazerLogin(email, senha);
 
       const login = fazerLogin(email, senha);
 

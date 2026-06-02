@@ -13,16 +13,16 @@ import {
 
 const CATEGORIA_LABELS = {
     todos: 'Todos os Livros',
-    ficcao: 'Ficcao',
-    'nao-ficcao': 'Nao-ficcao',
+    ficcao: 'Ficção',
+    'nao-ficcao': 'Não-ficção',
     romance: 'Romance',
     fantasia: 'Fantasia',
-    misterio: 'Misterio',
+    misterio: 'Mistério',
     biografia: 'Biografia',
-    infantojuvenil: 'Infantojuvenil',
+    infantojuvenil: 'Infanto Juvenil',
     poesia: 'Poesia',
     drama: 'Drama',
-    'ficcao-cientifica': 'Ficcao Cientifica'
+    'ficcao-cientifica': 'Ficção Científica'
 }
 
 const dom = {}
@@ -317,17 +317,6 @@ function renderizarLivros(listaLivros) {
 
         const acoes = document.createElement('div')
         acoes.className = 'livro-acoes'
-
-        const btnAddLista = document.createElement('button')
-        btnAddLista.className = 'btn-add-lista'
-        btnAddLista.type = 'button'
-        btnAddLista.textContent = jaAdicionado ? 'Adicionado' : 'Adicionar'
-        btnAddLista.addEventListener('click', (event) => {
-            event.stopPropagation()
-            adicionarLivroNaBiblioteca(livro, btnAddLista)
-        })
-
-        acoes.appendChild(btnAddLista)
 
         info.appendChild(titulo)
         info.appendChild(autor)
@@ -628,8 +617,6 @@ function normalizarTexto(texto) {
 }
 
 function abrirDetalhesLivro(livro) {
-    upsertBook(livro)
-
     window.location.href = `/book?id=${encodeURIComponent(livro.id)}`
 }
 

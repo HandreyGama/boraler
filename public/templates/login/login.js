@@ -10,13 +10,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const emailInput = document.getElementById("email-input");
   const passwordInput = document.getElementById("password-input");
 
-  form.addEventListener("submit", (event) => {
+  form.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     const email = emailInput.value.trim().toLowerCase();
     const senha = passwordInput.value.trim();
 
-    const resultado = fazerLogin(email, senha);
+    const resultado = await fazerLogin(email, senha);
     if (resultado.sucesso) {
       Swal.fire({
         icon: "success",

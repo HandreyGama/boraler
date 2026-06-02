@@ -62,7 +62,7 @@ export function saveReaderState(state) {
 }
 
 export function upsertBook(book) {
-    return addBookToMyList(book, true)
+    return addBookToMyList({ ...book, inMyList: false }, true)
 }
 
 export function addBookToMyList(book, selectBook = false) {

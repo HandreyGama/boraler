@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leitor - Boraler
-    </title>
+    <title>Leitor - Boraler</title>
+        <link rel="icon" type="image/png" href="/assets/favicon_boraler.png">
     <link rel="stylesheet" href="/css/book.css?v=20260420c">
     <script type="module" src="/templates/book/book.js?v=20260420c"></script>
 </head>
 <body data-theme="sepia">
+
     <script type="module">
         import { estaLogado, isAdmin } from '/src/modules/auth.js';
         
@@ -25,7 +26,10 @@
     <div class="reader-shell">
         <header class="topbar">
             <div class="topbar-left">
-                <a class="icon-circle back-home-btn" href="/home" aria-label="Voltar para home" title="Voltar para home">
+                <a class="icon-circle back-home-btn" aria-label="Voltar para home" title="Voltar para minha biblioteca" onclick="    
+                    sessionStorage.setItem('recarregarPagina','true')
+                    window.history.back()
+                    ">
                     <svg viewBox="0 0 24 24" aria-hidden="true">
                         <path d="M15.4 5.4L8.8 12l6.6 6.6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"></path>
                     </svg>
