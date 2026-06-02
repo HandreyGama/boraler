@@ -62,3 +62,25 @@ export function obterUsuarioAtual() {
 export function estaLogado() {
     return Boolean(obterUsuarioAtual());
 }
+
+export function atualizarSenha(email, novaSenha) {
+    const emailNormalizado = email.trim().toLowerCase();
+    const senhaNormalizada = String(novaSenha || '').trim();
+
+    if (!emailNormalizado || !senhaNormalizada) {
+        return { sucesso: false, message: 'O e-mail e a nova senha são obrigatórios.' };
+    }
+
+    const usuarios = JSON.parse(localStorage.getItem('libdb_users')) || [];
+    const usuarioIndex = usuarios.findIndex((item) => item.email === emailNormalizado);
+
+    if (usuarioIndex === -1) {
+        return { sucesso: false, mensagem: 'Este e-mail não está cadastrado em nosso sistema.' };
+    }
+    
+    usuarios[usuarioIndex].senha = btoa(senhaNormalizada);
+    usuarios[usuarioIndex].atualizadoEm = new Date().toISOString();
+
+    localStorage.setItem('libdb_users', JSON.stringify(usuarios));
+    return { sucesso: true, mensagem: 'Sua senha foi redefinida com sucesso!' };
+}

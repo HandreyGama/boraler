@@ -229,6 +229,23 @@ a {
     color: #fff;
 }
 
+#toggle-confirm-password {
+    position: absolute;
+    right: 15px;
+    top: 60%;
+    /* Centraliza verticalmente no campo */
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.7);
+    user-select: none;
+    font-size: 20px;
+    transition: 0.2s;
+}
+
+#toggle-confirm-password:hover {
+    color: #fff;
+}
+
 .login-reset-senha {
     width: 100%;
     padding: 12px;
