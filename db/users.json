@@ -1,0 +1,14 @@
+[
+  {
+    "email": "admin@boraler.com",
+    "senha": "YWRtaW4xMjM=",
+    "role": "admin",
+    "criadoEm": "2026-04-28T18:43:07.725Z"
+  },
+  {
+    "email": "df1234@gmail.com",
+    "senha": "ZGYxMjM0",
+    "role": "user",
+    "criadoEm": "2026-04-28T18:55:12.144Z"
+  }
+]

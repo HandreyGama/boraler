@@ -1,54 +1,67 @@
-const USERS_STORAGE_KEY = 'libdb_users';
 const CURRENT_USER_KEY = 'libdb_current_user';
 
-function normalizarEmail(email = '') {
-    return email.trim().toLowerCase();
-}
-
-export function registrarUsuario(email, senha) {
-    const emailNormalizado = normalizarEmail(email);
-    const senhaNormalizada = String(senha || '').trim();
+export async function registrarUsuario(email, senha) {
+    const emailNormalizado = String(email).trim().toLowerCase();
+    const senhaNormalizada = String(senha).trim();
 
     if (!emailNormalizado || !senhaNormalizada) {
         return { sucesso: false, mensagem: 'O e-mail e a senha são obrigatórios.' };
     }
 
-    const usuarios = JSON.parse(localStorage.getItem(USERS_STORAGE_KEY)) || [];
-    const jaExiste = usuarios.some((usuario) => usuario.email === emailNormalizado);
+    try {
+        const response = await fetch('/api/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: emailNormalizado, senha: senhaNormalizada })
+        });
 
-    if (jaExiste) {
-        return { sucesso: false, mensagem: 'Este e-mail já está cadastrado.' };
+        const data = await response.json();
+
+        if (data.sucesso) {
+            const userData = JSON.stringify({
+                email: data.usuario.email,
+                role: data.usuario.role
+            });
+            localStorage.setItem(CURRENT_USER_KEY, userData);
+        }
+
+        return data;
+    } catch (error) {
+        console.error('Erro no registro:', error);
+        return { sucesso: false, mensagem: 'Erro ao conectar com o servidor' };
     }
-
-    usuarios.push({
-        email: emailNormalizado,
-        senha: btoa(senhaNormalizada),
-        criadoEm: new Date().toISOString()
-    });
-
-    localStorage.setItem(USERS_STORAGE_KEY, JSON.stringify(usuarios));
-    return { sucesso: true, mensagem: 'Cadastro realizado com sucesso!' };
 }
 
-export function fazerLogin(email, senha) {
-    const emailNormalizado = normalizarEmail(email);
-    const senhaNormalizada = String(senha || '').trim();
+export async function fazerLogin(email, senha) {
+    const emailNormalizado = String(email).trim().toLowerCase();
+    const senhaNormalizada = String(senha).trim();
 
     if (!emailNormalizado || !senhaNormalizada) {
         return { sucesso: false, mensagem: 'O e-mail e a senha são obrigatórios.' };
     }
 
-    const usuarios = JSON.parse(localStorage.getItem(USERS_STORAGE_KEY)) || [];
-    const usuario = usuarios.find(
-        (item) => item.email === emailNormalizado && item.senha === btoa(senhaNormalizada)
-    );
+    try {
+        const response = await fetch('/api/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: emailNormalizado, senha: senhaNormalizada })
+        });
 
-    if (!usuario) {
-        return { sucesso: false, mensagem: 'Email ou senha invalidos.' };
+        const data = await response.json();
+
+        if (data.sucesso) {
+            const userData = JSON.stringify({
+                email: data.usuario.email,
+                role: data.usuario.role
+            });
+            localStorage.setItem(CURRENT_USER_KEY, userData);
+        }
+
+        return data;
+    } catch (error) {
+        console.error('Erro no login:', error);
+        return { sucesso: false, mensagem: 'Erro ao conectar com o servidor' };
     }
-
-    localStorage.setItem(CURRENT_USER_KEY, usuario.email);
-    return { sucesso: true, mensagem: 'Login realizado com sucesso!' };
 }
 
 export function fazerLogout() {
@@ -56,7 +69,22 @@ export function fazerLogout() {
 }
 
 export function obterUsuarioAtual() {
-    return localStorage.getItem(CURRENT_USER_KEY);
+    try {
+        const user = localStorage.getItem(CURRENT_USER_KEY);
+        return user ? JSON.parse(user) : null;
+    } catch {
+        return null;
+    }
+}
+
+export function obterEmailUsuarioAtual() {
+    const user = obterUsuarioAtual();
+    return user?.email || null;
+}
+
+export function obterRoleUsuarioAtual() {
+    const user = obterUsuarioAtual();
+    return user?.role || 'user';
 }
 
 export function estaLogado() {

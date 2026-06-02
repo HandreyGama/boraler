@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Acervo Global</title>
+    <link rel="stylesheet" href="/css/admin.css?v=20260428-4">
+</head>
+<body>
+    <main class="admin-shell">
+        <header class="admin-hero">
+            <h1 class="admin-title">Acervo Global</h1>
+            <p class="admin-subtitle">Lista unificada de livros.</p>
+            <div class="admin-toolbar">
+                <button class="btn btn-muted" onclick="voltar()">Voltar</button>
+                <button class="btn btn-primary" onclick="sincronizar()">Sincronizar Open Library</button>
+                <button class="btn btn-danger" onclick="limparFormulario()">Limpar formulário</button>
+            </div>
+        </header>
+
+        <section class="admin-content">
+            <div class="admin-layout">
+                <article class="panel">
+                    <h2 class="panel-title">Livro</h2>
+                    <form id="book-form" class="form-grid">
+                        <div>
+                            <label for="titulo">Título</label>
+                            <input id="titulo" type="text" required placeholder="Ex: Dom Casmurro">
+                        </div>
+                        <div>
+                            <label for="autor">Autor</label>
+                            <input id="autor" type="text" required placeholder="Ex: Machado de Assis">
+                        </div>
+                        <div>
+                            <label for="categoria">Categoria</label>
+                            <select id="categoria">
+                                <option value="ficcao">Ficção</option>
+                                <option value="nao-ficcao">Não-ficção</option>
+                                <option value="romance">Romance</option>
+                                <option value="fantasia">Fantasia</option>
+                                <option value="misterio">Mistério</option>
+                                <option value="biografia">Biografia</option>
+                                <option value="poesia">Poesia</option>
+                                <option value="drama">Drama</option>
+                                <option value="ficcao-cientifica">Ficção científica</option>
+                                <option value="infantojuvenil">Infantojuvenil</option>
+                            </select>
+                        </div>
+                        <div class="row">
+                            <div>
+                                <label for="ano">Ano</label>
+                                <input id="ano" type="number" placeholder="2024">
+                            </div>
+                            <div>
+                                <label for="paginas">Páginas</label>
+                                <input id="paginas" type="number" placeholder="320">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="capaUrl">URL da capa</label>
+                            <input id="capaUrl" type="url" placeholder="https://...">
+                        </div>
+                        <div>
+                            <label for="descricao">Descrição</label>
+                            <textarea id="descricao" placeholder="Resumo do livro"></textarea>
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn btn-primary" type="submit" id="submit-btn">Salvar livro</button>
+                            <button class="btn btn-muted" type="button" onclick="limparFormulario()">Cancelar edição</button>
+                        </div>
+                    </form>
+                    <p class="notice" id="form-mode">Modo: novo livro</p>
+                </article>
+
+                <article class="panel">
+                    <h2 class="panel-title">Todos os livros</h2>
+                    <p class="notice" id="catalog-stats"></p>
+                    <div id="books-container" class="books-grid">
+                        <div class="empty">Carregando catálogo...</div>
+                    </div>
+                </article>
+            </div>
+        </section>
+    </main>
+
+    <script type="module">
+        import { estaLogado, isAdmin } from '/src/modules/auth.js';
+        import {
+            obterLivrosGlobais,
+            sincronizarLivrosGlobais,
+            adicionarLivroGlobal,
+            atualizarLivroGlobal,
+            deletarLivroGlobal,
+            obterLivroGlobalPorId
+        } from '/src/modules/global_books.js?v=20260428-4';
+
+        if (!estaLogado() || !isAdmin()) {
+            window.location.href = '/';
+        }
+
+        const form = document.getElementById('book-form');
+        const stats = document.getElementById('catalog-stats');
+        const modeLabel = document.getElementById('form-mode');
+        const submitBtn = document.getElementById('submit-btn');
+        let editingId = null;
+
+        function getFormData() {
+            return {
+                titulo: document.getElementById('titulo').value.trim(),
+                autor: document.getElementById('autor').value.trim(),
+                categoria: document.getElementById('categoria').value,
+                ano: Number(document.getElementById('ano').value) || null,
+                paginas: Number(document.getElementById('paginas').value) || null,
+                capaUrl: document.getElementById('capaUrl').value.trim(),
+                descricao: document.getElementById('descricao').value.trim(),
+                origem: 'manual'
+            };
+        }
+
+        async function carregarCatalogo() {
+            const container = document.getElementById('books-container');
+            const livros = obterLivrosGlobais();
+
+            if (!livros.length) {
+                container.innerHTML = '<div class="empty">Catálogo vazio. Clique em "Sincronizar Open Library".</div>';
+                stats.textContent = '0 livros no catálogo';
+                return;
+            }
+
+            stats.textContent = `${livros.length} livros no catálogo`;
+            container.innerHTML = livros.map((livro) => `
+                <article class="card">
+                    <h3>${livro.titulo}</h3>
+                    <p><strong>Autor:</strong> ${livro.autor || 'Desconhecido'}</p>
+                    <p><strong>Categoria:</strong> ${livro.categoria || 'ficcao'}</p>
+                    <p><strong>Ano:</strong> ${livro.ano || 'N/A'} · <strong>Páginas:</strong> ${livro.paginas || 'N/A'}</p>
+                    <p><strong>Origem:</strong> ${livro.origem || 'openlibrary'}</p>
+                    <div class="card-actions">
+                        <button class="btn btn-primary" onclick="editar('${encodeURIComponent(livro.id)}')">Editar</button>
+                        <button class="btn btn-danger" onclick="remover('${encodeURIComponent(livro.id)}')">Excluir</button>
+                    </div>
+                </article>
+            `).join('');
+        }
+
+        function preencherFormulario(livro) {
+            document.getElementById('titulo').value = livro.titulo || '';
+            document.getElementById('autor').value = livro.autor || '';
+            document.getElementById('categoria').value = livro.categoria || 'ficcao';
+            document.getElementById('ano').value = livro.ano || '';
+            document.getElementById('paginas').value = livro.paginas || '';
+            document.getElementById('capaUrl').value = livro.capaUrl || '';
+            document.getElementById('descricao').value = livro.descricao || '';
+        }
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            const payload = getFormData();
+
+            if (!payload.titulo || !payload.autor) {
+                alert('Título e autor são obrigatórios.');
+                return;
+            }
+
+            let result;
+            if (editingId) {
+                result = atualizarLivroGlobal(editingId, payload);
+            } else {
+                result = adicionarLivroGlobal(payload);
+            }
+
+            alert(result.mensagem);
+            if (result.sucesso) {
+                limparFormulario();
+                carregarCatalogo();
+            }
+        });
+
+        window.editar = function(encodedId) {
+            const id = decodeURIComponent(encodedId);
+            const livro = obterLivroGlobalPorId(id);
+            if (!livro) return;
+
+            editingId = id;
+            preencherFormulario(livro);
+            modeLabel.textContent = `Modo: editando ${livro.titulo}`;
+            submitBtn.textContent = 'Atualizar livro';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+
+        window.remover = function(encodedId) {
+            const id = decodeURIComponent(encodedId);
+            if (!confirm('Excluir este livro do catálogo global?')) return;
+            const result = deletarLivroGlobal(id);
+            alert(result.mensagem);
+            if (result.sucesso) {
+                carregarCatalogo();
+            }
+        };
+
+        window.sincronizar = async function() {
+            await sincronizarLivrosGlobais({ forceRefresh: true });
+            await carregarCatalogo();
+            alert('Catálogo sincronizado com Open Library.');
+        };
+
+        window.limparFormulario = function() {
+            form.reset();
+            editingId = null;
+            modeLabel.textContent = 'Modo: novo livro';
+            submitBtn.textContent = 'Salvar livro';
+        };
+
+        window.voltar = function() {
+            window.location.href = '/admin/home';
+        };
+
+        await sincronizarLivrosGlobais();
+        await carregarCatalogo();
+    </script>
+</body>
+</html>

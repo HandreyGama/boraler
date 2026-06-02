@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Biblioteca do Usuário</title>
+    <link rel="stylesheet" href="/css/admin.css?v=20260428-2">
+</head>
+<body>
+    <main class="admin-shell">
+        <header class="admin-hero">
+            <h1 class="admin-title">Biblioteca do Usuário</h1>
+            <p class="admin-subtitle">Você está gerenciando a biblioteca de <strong id="user-email"></strong>.</p>
+            <div class="admin-toolbar">
+                <button class="btn btn-muted" onclick="voltar()">Voltar para usuários</button>
+                <button class="btn btn-primary" onclick="recarregar()">Recarregar</button>
+            </div>
+        </header>
+
+        <section class="admin-content">
+            <article class="panel">
+                <h2 class="panel-title">Livros na lista do usuário</h2>
+                <div id="books-container" class="books-grid">
+                    <div class="empty">Carregando biblioteca...</div>
+                </div>
+            </article>
+        </section>
+    </main>
+
+    <script type="module">
+        import { estaLogado, isAdmin } from '/src/modules/auth.js';
+        import { loadReaderStateForUser, saveReaderStateForUser } from '/src/modules/reader_store.js';
+
+        if (!estaLogado() || !isAdmin()) {
+            window.location.href = '/';
+        }
+
+        const targetUserEmail = sessionStorage.getItem('admin-user-email');
+        if (!targetUserEmail) {
+            window.location.href = '/admin/home';
+        }
+
+        document.getElementById('user-email').textContent = targetUserEmail;
+
+        function carregarBiblioteca() {
+            const container = document.getElementById('books-container');
+            const userState = loadReaderStateForUser(targetUserEmail);
+            const books = (userState.listOrder || [])
+                .map((id) => userState.books?.[id])
+                .filter((book) => Boolean(book) && book.inMyList !== false);
+
+            if (books.length === 0) {
+                container.innerHTML = '<div class="empty">Esta biblioteca está vazia.</div>';
+                return;
+            }
+
+            container.innerHTML = books.map((book) => `
+                <article class="card">
+                    <h3>${book.titulo || book.title || 'Sem título'}</h3>
+                    <p><strong>Autor:</strong> ${book.autor || (Array.isArray(book.author_name) ? book.author_name.join(', ') : book.author_name) || 'Desconhecido'}</p>
+                    <p><strong>Status:</strong> ${book.status || 'quero-ler'}</p>
+                    <p><strong>Progresso:</strong> ${Number(book.readingProgress || 0)}%</p>
+                    <div class="card-actions">
+                        <button class="btn btn-danger" onclick="remover('${book.id}')">Remover da lista</button>
+                    </div>
+                </article>
+            `).join('');
+        }
+
+        window.remover = function(bookId) {
+            if (!confirm('Remover este livro da biblioteca do usuário?')) return;
+
+            const userState = loadReaderStateForUser(targetUserEmail);
+            const currentBook = userState.books?.[bookId];
+            if (!currentBook) return;
+
+            const nextState = {
+                ...userState,
+                books: {
+                    ...userState.books,
+                    [bookId]: {
+                        ...currentBook,
+                        inMyList: false,
+                        updatedAt: new Date().toISOString()
+                    }
+                },
+                listOrder: (userState.listOrder || []).filter((id) => id !== bookId)
+            };
+
+            saveReaderStateForUser(targetUserEmail, nextState);
+            carregarBiblioteca();
+        };
+
+        window.voltar = function() {
+            window.location.href = '/admin/home';
+        };
+
+        window.recarregar = function() {
+            carregarBiblioteca();
+        };
+
+        carregarBiblioteca();
+    </script>
+</body>
+</html>

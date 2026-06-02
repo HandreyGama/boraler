@@ -1,4 +1,19 @@
-const STORAGE_KEY = 'libdb_reader_state_v1'
+import { obterEmailUsuarioAtual } from './auth.js'
+
+const LEGACY_STORAGE_KEY = 'libdb_reader_state_v1'
+
+function getStorageKey(email) {
+    return `libdb_reader_state_${String(email || '').trim().toLowerCase()}`
+}
+
+function parseReaderState(raw) {
+    const parsed = JSON.parse(raw)
+    return {
+        selectedBookId: parsed?.selectedBookId || null,
+        books: parsed?.books || {},
+        listOrder: Array.isArray(parsed?.listOrder) ? parsed.listOrder : []
+    }
+}
 
 export function getInitialReaderState() {
     return {
@@ -8,27 +23,42 @@ export function getInitialReaderState() {
     }
 }
 
-export function loadReaderState() {
+export function loadReaderStateForUser(email) {
     try {
-        const raw = localStorage.getItem(STORAGE_KEY)
+        const storageKey = getStorageKey(email)
+        const raw = localStorage.getItem(storageKey)
         if (!raw) {
+            // Migra estado legado para o usuario atual quando aplicavel.
+            const legacy = localStorage.getItem(LEGACY_STORAGE_KEY)
+            if (legacy && normalizeEmail(email) === normalizeEmail(obterEmailUsuarioAtual())) {
+                const migrated = parseReaderState(legacy)
+                localStorage.setItem(storageKey, JSON.stringify(migrated))
+                return migrated
+            }
             return getInitialReaderState()
         }
 
-        const parsed = JSON.parse(raw)
-        return {
-            selectedBookId: parsed?.selectedBookId || null,
-            books: parsed?.books || {},
-            listOrder: Array.isArray(parsed?.listOrder) ? parsed.listOrder : []
-        }
+        return parseReaderState(raw)
     } catch (error) {
         console.error('Falha ao carregar estado do leitor:', error)
         return getInitialReaderState()
     }
 }
 
+function normalizeEmail(email) {
+    return String(email || '').trim().toLowerCase()
+}
+
+export function loadReaderState() {
+    return loadReaderStateForUser(obterEmailUsuarioAtual())
+}
+
+export function saveReaderStateForUser(email, state) {
+    localStorage.setItem(getStorageKey(email), JSON.stringify(state))
+}
+
 export function saveReaderState(state) {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(state))
+    saveReaderStateForUser(obterEmailUsuarioAtual(), state)
 }
 
 export function upsertBook(book) {
