@@ -183,8 +183,3 @@ const voltarBtn = document.getElementById("voltar-btn");
 voltarBtn?.addEventListener("click", () => {
   window.location.href = "/home";
 });
-const darkModeBtn = document.getElementById("dark-mode-btn");
-
-darkModeBtn?.addEventListener("click", () => {
-  document.body.classList.toggle("dark-mode");
-});

@@ -81,8 +81,8 @@ body {
   flex-direction: column;
   align-items: flex-start;
 }
-#dark-mode-btn {
-  color: #f2c94c;
+#theme-toggle {
+  color: #ffffff;
 }
 
 #voltar-btn {

@@ -72,7 +72,7 @@ export function addBookToMyList(book, selectBook = false) {
         ...current,
         ...book,
         readingProgress: Number(current.readingProgress || 0),
-        inMyList: book.inMyList ?? current.inMyList ?? true,
+        inMyList: current.inMyList ?? true,
         favorite: current.favorite ?? false,
         status: current.status || 'quero-ler',
         notes: current.notes || '',
