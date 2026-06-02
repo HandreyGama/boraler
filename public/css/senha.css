@@ -16,19 +16,14 @@ body {
     background-position: center;
 }
 
-
-
 #login-container {
     width: 500px;
     height: 640px;
-
     padding: 40px 30px;
     border-radius: 20px;
-
     background: rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(15px);
     border: 1px solid rgba(255, 255, 255, 0.2);
-
     color: #fff;
 }
 
@@ -38,7 +33,6 @@ body {
     font-size: 24px;
     display: flex;
     justify-content: center;
-
 }
 
 #login-subtitle {
@@ -51,7 +45,6 @@ body {
 }
 
 #login-sub {
-
     text-align: center;
     display: flex;
     justify-content: center;
@@ -73,11 +66,9 @@ body {
     border-radius: 10px;
     position: relative;
     bottom: 40px;
-
     border: 1px solid rgba(255, 255, 255, 0.2);
     background: rgba(255, 255, 255, 0.1);
     color: white;
-
     outline: none;
 }
 
@@ -88,11 +79,9 @@ body {
     border-radius: 10px;
     position: relative;
     bottom: -8px;
-
     border: 1px solid rgba(255, 255, 255, 0.2);
     background: rgba(255, 255, 255, 0.1);
     color: white;
-
     outline: none;
 }
 
@@ -100,12 +89,10 @@ body {
     color: rgba(255, 255, 255, 0.6);
 }
 
-
 #text-nome {
     position: relative;
     bottom: 40px;
     font-size: 14px;
-
 }
 
 #text-senha {
@@ -120,7 +107,12 @@ body {
     font-size: 14px;
 }
 
-/* "esqueci senha" */
+#text-confirmar-senha {
+    position: relative;
+    bottom: 30px;
+    font-size: 14px;
+}
+
 p {
     font-size: 13px;
     margin-bottom: 15px;
@@ -139,9 +131,7 @@ p {
     display: flex;
     flex-direction: column;
     gap: 15px;
-    /* Espaço entre os dois botões */
     margin-top: 20px;
-    /* Afasta os botões dos elementos de cima */
 }
 
 .login-button {
@@ -151,11 +141,9 @@ p {
     border: none;
     background: linear-gradient(90deg, #b72609, #efa748);
     color: white !important;
-    /* Força a cor branca mesmo sendo um link */
     font-weight: bold;
     cursor: pointer;
     transition: 0.3s;
-
     display: block;
     text-align: center;
     text-decoration: none;
@@ -167,24 +155,27 @@ p {
     opacity: 0.9;
 }
 
-.login-button-reset-senha:hover {
+.login-reset-senha {
     width: 100%;
     padding: 12px;
     border-radius: 10px;
     border: none;
     color: white !important;
-    /* Força a cor branca mesmo sendo um link */
     font-weight: bold;
     cursor: pointer;
     transition: 0.3s;
-
     display: block;
     text-align: center;
     text-decoration: none;
     box-sizing: border-box;
-
     position: relative;
-    bottom: 40px;
+    bottom: 10px;
+}
+
+/* Tratamento de hover corrigido e limpo (trazido do Arquivo 02) */
+.login-button-reset-senha:hover {
+    transform: scale(1.03);
+    opacity: 0.9;
 }
 
 #register-button:hover {
@@ -198,25 +189,21 @@ a {
 
 .password-wrapper {
     position: relative;
-    /* Copiamos o deslocamento que você usou nos outros inputs */
     bottom: 40px;
     width: 100%;
 }
 
 .password-wrapper .text-input {
     margin-bottom: 0;
-    /* Remove margem extra interna */
     bottom: 0;
-    /* O wrapper já está cuidando do posicionamento */
     padding-right: 45px;
-    /* Espaço para o texto não passar por baixo do olho */
 }
 
+/* Primeiro seletor do olhinho */
 #toggle-password {
     position: absolute;
     right: 15px;
     top: 60%;
-    /* Centraliza verticalmente no campo */
     transform: translateY(-50%);
     cursor: pointer;
     color: rgba(255, 255, 255, 0.7);
@@ -229,33 +216,19 @@ a {
     color: #fff;
 }
 
-.login-reset-senha {
-    width: 100%;
-    padding: 12px;
-    border-radius: 10px;
-    border: none;
-    color: white !important;
-    /* Força a cor branca mesmo sendo um link */
-    font-weight: bold;
+/* Segundo seletor do olhinho unificado com sucesso (trazido do Arquivo 02) */
+#toggle-confirm-password {
+    position: absolute;
+    right: 15px;
+    top: 60%;
+    transform: translateY(-50%);
     cursor: pointer;
-    transition: 0.3s;
-
-    display: block;
-    text-align: center;
-    text-decoration: none;
-    box-sizing: border-box;
-
-    position: relative;
-    bottom: 10px;
+    color: rgba(255, 255, 255, 0.7);
+    user-select: none;
+    font-size: 20px;
+    transition: 0.2s;
 }
 
-.login-button-reset-senha:hover {
-    transform: scale(1.03);
-    opacity: 0.9;
-}
-
-#text-confirmar-senha {
-    position: relative;
-    bottom: 30px; /* Faz ele descer em comparação ao padrão de 40px */
-    font-size: 14px;
+#toggle-confirm-password:hover {
+    color: #fff;
 }

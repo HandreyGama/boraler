@@ -68,6 +68,41 @@ app.post('/api/register', (req, res) => {
     }
 });
 
+// NOVA ROTA: Adicionada para conversar perfeitamente com o seu auth.js frontend
+app.post('/api/update-password', (req, res) => {
+    const { email = '', senha = '' } = req.body || {};
+    const emailNormalizado = String(email).trim().toLowerCase();
+    const senhaNormalizada = String(senha).trim();
+
+    if (!emailNormalizado || !senhaNormalizada) {
+        return res.status(400).json({ sucesso: false, mensagem: 'Email e senha são obrigatórios' });
+    }
+
+    // Verifica se o usuário de fato existe no sistema antes de alterar
+    const usuario = obterUsuarioPorEmail(emailNormalizado);
+    if (!usuario) {
+        return res.status(404).json({ sucesso: false, mensagem: 'Este e-mail não está cadastrado em nosso sistema.' });
+    }
+
+    // Codifica a nova senha em Base64 seguindo o padrão que você usou no registro
+    const senhaEncodada = Buffer.from(senhaNormalizada).toString('base64');
+    
+    // Atualiza o registro usando o seu db-manager
+    const resultado = atualizarUsuario(emailNormalizado, { 
+        senha: senhaEncodada,
+        atualizadoEm: new Date().toISOString()
+    });
+
+    if (resultado.sucesso) {
+        res.json({
+            sucesso: true,
+            mensagem: 'Sua senha foi redefinida com sucesso!'
+        });
+    } else {
+        res.status(400).json(resultado);
+    }
+});
+
 app.get('/api/users', (req, res) => {
     const usuarios = obterTodosUsuarios().map(u => ({
         email: u.email,
@@ -125,4 +160,5 @@ app.get('/minha_biblioteca', (req,res) =>{
 app.get('/reset-senha', (req,res) =>{
     res.sendFile('/templates/login/senha.html', { root: path.join(__dirname, 'public') })
 })
-app.listen(3000, () => console.log(' *http://localhost:3000!'));
+
+app.listen(3000, () => console.log(' * http://localhost:3000!'));
