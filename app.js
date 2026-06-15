@@ -5,8 +5,8 @@ import { obterTodosUsuarios, obterUsuarioPorEmail, registrarUsuario, atualizarUs
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-
 const app = express()
+
 app.use(express.static('public'))
 app.use(express.json())
 
@@ -70,7 +70,6 @@ app.post('/api/register', (req, res) => {
     }
 });
 
-// NOVA ROTA: Adicionada para conversar perfeitamente com o seu auth.js frontend
 app.post('/api/update-password', (req, res) => {
     const { email = '', senha = '' } = req.body || {};
     const emailNormalizado = String(email).trim().toLowerCase();
@@ -86,10 +85,8 @@ app.post('/api/update-password', (req, res) => {
         return res.status(404).json({ sucesso: false, mensagem: 'Este e-mail não está cadastrado em nosso sistema.' });
     }
 
-    // Codifica a nova senha em Base64 seguindo o padrão que você usou no registro
     const senhaEncodada = Buffer.from(senhaNormalizada).toString('base64');
     
-    // Atualiza o registro usando o seu db-manager
     const resultado = atualizarUsuario(emailNormalizado, { 
         senha: senhaEncodada,
         atualizadoEm: new Date().toISOString()

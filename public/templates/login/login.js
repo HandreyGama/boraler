@@ -13,7 +13,6 @@ document.addEventListener("DOMContentLoaded", () => {
   const passwordInput = document.getElementById("password-input");
   const togglePassword = document.getElementById("toggle-password");
 
-  // Processamento do formulário de login de forma assíncrona (Aguardando a API)
   if (form) {
     form.addEventListener("submit", async (event) => {
       event.preventDefault();
@@ -21,7 +20,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const email = emailInput.value.trim().toLowerCase();
       const senha = passwordInput.value.trim();
 
-      // Chamada à API tratada corretamente com await (trazido do Arquivo 02)
       const resultado = await fazerLogin(email, senha);
 
       if (resultado.sucesso) {

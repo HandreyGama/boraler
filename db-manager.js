@@ -10,6 +10,7 @@ const USERS_FILE = path.join(DB_DIR, 'users.json');
 // Garantir que o diretório existe
 if (!fs.existsSync(DB_DIR)) {
     fs.mkdirSync(DB_DIR, { recursive: true });
+    
 }
 
 function loadUsers() {
