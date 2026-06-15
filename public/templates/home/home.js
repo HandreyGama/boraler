@@ -80,23 +80,24 @@ async function iniciarTutorial() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  if (!localStorage.getItem('tutorialVisto')) {
-    Swal.fire({
-        title: 'Deseja assistir ao tutorial?',
-        text: 'Conheça as principais funcionalidades do BoraLer.',
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonText: 'Sim',
-        cancelButtonText: 'Não',
-        confirmButtonColor: '#d95a1a'
-    }).then((result) => {
-        if (result.isConfirmed) {
-            iniciarTutorial();
-        } else {
-            localStorage.setItem('tutorialVisto', 'true');
-        }
-    });
-}
+    localStorage.setItem('tutorialVisto', 'false');
+    if (localStorage.getItem('tutorialVisto') === "false") {
+        Swal.fire({
+            title: 'Deseja assistir ao tutorial?',
+            text: 'Conheça as principais funcionalidades do BoraLer.',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Sim',
+            cancelButtonText: 'Não',
+            confirmButtonColor: '#d95a1a'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                iniciarTutorial();
+            } else {
+                localStorage.setItem('tutorialVisto', 'true');
+            }
+        });
+    }
 
     const botao = document.getElementById('btn-logout');
 

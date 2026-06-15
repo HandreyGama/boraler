@@ -20,6 +20,8 @@ app.post('/api/login', (req, res) => {
         return res.status(400).json({ sucesso: false, mensagem: 'Email e senha são obrigatórios' });
     }
 
+    
+
     const usuario = obterUsuarioPorEmail(emailNormalizado);
     const senhaBase64 = Buffer.from(senhaNormalizada).toString('base64');
     const senhaConfere = usuario && (usuario.senha === senhaBase64 || usuario.senha === senhaNormalizada);
