@@ -1,4 +1,5 @@
 import { fazerLogin, estaLogado } from "../../src/modules/auth.js";
+import { isAdmin } from "../../src/modules/auth.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   // Impede o acesso à tela caso o usuário já esteja autenticado
@@ -21,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const senha = passwordInput.value.trim();
 
       const resultado = await fazerLogin(email, senha);
-
+      
       if (resultado.sucesso) {
         Swal.fire({
           icon: "success",
@@ -29,7 +30,8 @@ document.addEventListener("DOMContentLoaded", () => {
           text: resultado.mensagem,
           confirmButtonColor: "#d95a1a",
         }).then(() => {
-          window.location.href = "/home";
+          isAdmin() ? window.location.href = "/admin": window.location.href = "/home";
+          
         });
       } else {
         Swal.fire({

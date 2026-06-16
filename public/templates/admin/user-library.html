@@ -37,7 +37,7 @@
 
         const targetUserEmail = sessionStorage.getItem('admin-user-email');
         if (!targetUserEmail) {
-            window.location.href = '/admin/home';
+            window.location.href = '/admin';
         }
 
         document.getElementById('user-email').textContent = targetUserEmail;
@@ -92,7 +92,7 @@
         };
 
         window.voltar = function() {
-            window.location.href = '/admin/home';
+            window.location.href = '/admin/';
         };
 
         window.recarregar = function() {

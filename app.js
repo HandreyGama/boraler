@@ -157,6 +157,15 @@ app.get('/book', (req,res) =>{
 app.get('/minha_biblioteca', (req,res) =>{
     res.sendFile('/templates/minha_biblioteca/minha_biblioteca.html', { root: path.join(__dirname, 'public') })
 })
+app.get('/admin', (req,res) =>{
+    res.sendFile('/templates/admin/admin-home.html', { root: path.join(__dirname, 'public') })
+})
+app.get('/admin/user-library', (req,res) =>{
+    res.sendFile('/templates/admin/user-library.html', { root: path.join(__dirname, 'public')})
+})
+app.get('/admin/books-management', (req,res) =>{
+    res.sendFile('/templates/admin/books-management.html', { root: path.join(__dirname, 'public')})
+})
 app.get('/reset-senha', (req,res) =>{
     res.sendFile('/templates/login/senha.html', { root: path.join(__dirname, 'public') })
 })
