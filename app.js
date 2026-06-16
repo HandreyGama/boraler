@@ -2,14 +2,14 @@ import express from 'express'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { obterTodosUsuarios, obterUsuarioPorEmail, registrarUsuario, atualizarUsuario, deletarUsuario } from './db-manager.js'
-
+import { initializeDatabase } from './initialize.js'
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express()
 
 app.use(express.static('public'))
 app.use(express.json())
-
+initializeDatabase()
 // ============ ROTAS DE AUTENTICAÇÃO ============
 app.post('/api/login', (req, res) => {
     const { email = '', senha = '' } = req.body || {};
