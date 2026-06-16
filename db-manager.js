@@ -6,11 +6,12 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const DB_DIR = '/tmp/db';
 const USERS_FILE = path.join(DB_DIR, 'users.json');
+import { initializeDatabase } from './initialize.js'
 
 // Garantir que o diretório existe
 if (!fs.existsSync(DB_DIR)) {
     fs.mkdirSync(DB_DIR, { recursive: true });
-    
+    initializeDatabase()
 }
 
 function loadUsers() {

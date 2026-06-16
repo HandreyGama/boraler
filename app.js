@@ -9,6 +9,7 @@ const app = express()
 
 app.use(express.static('public'))
 app.use(express.json())
+
 initializeDatabase()
 // ============ ROTAS DE AUTENTICAÇÃO ============
 app.post('/api/login', (req, res) => {

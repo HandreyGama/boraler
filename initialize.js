@@ -7,7 +7,7 @@ import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const DB_DIR = path.join(__dirname, 'db');
+const DB_DIR = '/tmp/db';
 const USERS_FILE = path.join(DB_DIR, 'users.json');
 
 
