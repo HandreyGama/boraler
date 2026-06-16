@@ -1,5 +1,4 @@
 import { fazerLogout } from '../../src/modules/auth.js';
-
     
 async function iniciarTutorial() {
    await Swal.fire({
@@ -80,7 +79,7 @@ async function iniciarTutorial() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    localStorage.setItem('tutorialVisto', 'false');
+
     if (localStorage.getItem('tutorialVisto') === "false") {
         Swal.fire({
             title: 'Deseja assistir ao tutorial?',

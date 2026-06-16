@@ -6,6 +6,7 @@ import {
 
 document.addEventListener("DOMContentLoaded", async () => {
   // Impede que o usuário acesse a tela caso já esteja autenticado
+  localStorage.setItem('tutorialVisto', 'false');
   if (estaLogado()) {
     window.location.href = "/home";
     return;
