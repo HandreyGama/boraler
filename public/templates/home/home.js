@@ -1,6 +1,6 @@
 import { fazerLogout } from '../../src/modules/auth.js';
 
-
+    
 async function iniciarTutorial() {
    await Swal.fire({
     title: 'Bem-vindo ao BoraLer! 📚',
